@@ -8,7 +8,7 @@ export default function IntroAudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [audioReady, setAudioReady] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showPlayer, setShowPlayer] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -20,13 +20,15 @@ export default function IntroAudioPlayer() {
 
   const checkAudioAvailability = async () => {
     try {
-      const response = await fetch('/audio/intro.mp3', { method: 'HEAD' });
-      if (response.ok) {
-        setAudioReady(true);
+      const response = await fetch('/api/intro-audio');
+      const data = await response.json();
+      
+      if (data.success && data.audioUrl) {
+        setAudioUrl(data.audioUrl);
       }
     } catch {
-      // Audio pas encore généré
-      setAudioReady(false);
+      // Audio pas encore généré, on le générera au clic
+      setAudioUrl(null);
     }
   };
 
@@ -38,10 +40,10 @@ export default function IntroAudioPlayer() {
       const response = await fetch('/api/intro-audio');
       const data = await response.json();
 
-      if (data.success) {
-        setAudioReady(true);
+      if (data.success && data.audioUrl) {
+        setAudioUrl(data.audioUrl);
         setShowPlayer(true);
-        // Attendre un peu que le fichier soit accessible
+        // Attendre un peu que l'audio soit chargé
         setTimeout(() => {
           if (audioRef.current) {
             audioRef.current.load();
@@ -62,7 +64,7 @@ export default function IntroAudioPlayer() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (!audioReady) {
+    if (!audioUrl) {
       await generateAudio();
       return;
     }
@@ -144,20 +146,22 @@ export default function IntroAudioPlayer() {
       </AnimatePresence>
 
       {/* Lecteur audio caché */}
-      <audio
-        ref={audioRef}
-        src="/audio/intro.mp3"
-        onEnded={handleAudioEnded}
-        onError={handleAudioError}
-        onCanPlay={handleCanPlay}
-        onLoadStart={() => setIsLoading(true)}
-        preload="auto"
-        className="hidden"
-      />
+      {audioUrl && (
+        <audio
+          ref={audioRef}
+          src={audioUrl}
+          onEnded={handleAudioEnded}
+          onError={handleAudioError}
+          onCanPlay={handleCanPlay}
+          onLoadStart={() => setIsLoading(true)}
+          preload="auto"
+          className="hidden"
+        />
+      )}
 
       {/* Mini player (optionnel) */}
       <AnimatePresence>
-        {showPlayer && audioReady && (
+        {showPlayer && audioUrl && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
