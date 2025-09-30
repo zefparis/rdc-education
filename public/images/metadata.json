@@ -1,0 +1,14 @@
+{
+  "themes": [
+    "education",
+    "ai",
+    "students",
+    "africa",
+    "data-science",
+    "deep-learning"
+  ],
+  "imagesPerTheme": 5,
+  "totalImages": 30,
+  "generatedAt": "2025-09-30T15:48:57.306Z",
+  "source": "Unsplash"
+}
