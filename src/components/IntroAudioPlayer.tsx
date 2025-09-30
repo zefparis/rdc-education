@@ -43,12 +43,18 @@ export default function IntroAudioPlayer() {
       if (data.success && data.audioUrl) {
         setAudioUrl(data.audioUrl);
         setShowPlayer(true);
-        // Attendre un peu que l'audio soit chargé
-        setTimeout(() => {
+        // Attendre que l'audio soit chargé puis lancer la lecture
+        setTimeout(async () => {
           if (audioRef.current) {
             audioRef.current.load();
+            try {
+              await audioRef.current.play();
+              setIsPlaying(true);
+            } catch (error) {
+              console.error('Erreur lecture auto:', error);
+            }
           }
-        }, 500);
+        }, 800);
       } else {
         setError(data.error || 'Erreur lors de la génération');
       }

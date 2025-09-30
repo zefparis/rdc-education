@@ -59,9 +59,9 @@ export async function GET() {
 
     const mp3 = await openai.audio.speech.create({
       model: 'tts-1-hd',
-      voice: 'alloy',
+      voice: 'nova', // Nova a un accent plus neutre et clair pour le français
       input: INTRO_TEXT,
-      speed: 0.95,
+      speed: 0.92, // Légèrement plus lent pour meilleure compréhension
     });
 
     const buffer = Buffer.from(await mp3.arrayBuffer());
