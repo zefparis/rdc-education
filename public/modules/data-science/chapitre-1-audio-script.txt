@@ -1,0 +1,17 @@
+Bienvenue au Chapitre 1 : Introduction à Python pour la Data Science.
+
+Python est un langage de programmation simple et puissant, créé en 1991. Il est devenu l'outil de référence pour la Data Science et l'Intelligence Artificielle dans le monde entier.
+
+Pourquoi Python pour la Data Science ? Premièrement, Python dispose de bibliothèques riches comme Pandas pour manipuler les données, NumPy pour les calculs numériques, et Matplotlib pour créer des graphiques. Deuxièmement, sa syntaxe claire le rend facile à apprendre, même pour les débutants. Troisièmement, il est gratuit et accessible à tous.
+
+En République Démocratique du Congo, Python peut transformer de nombreux secteurs. Dans l'éducation, nous pouvons analyser les résultats scolaires et optimiser les ressources. Dans l'agriculture, nous pouvons prévoir les récoltes et analyser les données météorologiques. Dans la santé, nous pouvons suivre les épidémies et analyser les données hospitalières. Dans le commerce, nous pouvons analyser les ventes et prévoir les prix.
+
+Dans ce chapitre, vous allez apprendre les bases essentielles de Python. Vous découvrirez comment créer des variables pour stocker des informations, comment utiliser différents types de données comme les nombres et le texte, comment effectuer des calculs mathématiques, et comment prendre des décisions avec les conditions.
+
+Vous apprendrez également à utiliser les boucles pour répéter des actions, à créer des fonctions pour réutiliser votre code, et à manipuler des listes pour gérer plusieurs valeurs. Tous ces concepts seront illustrés avec des exemples concrets adaptés au contexte congolais.
+
+Le chapitre contient six exercices pratiques avec leurs solutions complètes. Ces exercices couvrent des situations réelles comme le calcul de moyennes scolaires, la gestion de stock, l'analyse de ventes, et la conversion de devises entre Francs Congolais et Dollars.
+
+Prenez votre temps pour comprendre chaque concept. La programmation s'apprend progressivement. Pratiquez régulièrement, même 30 minutes par jour. N'hésitez pas à expérimenter avec le code et à créer vos propres exemples.
+
+Bonne chance dans votre apprentissage de Python pour la Data Science !
