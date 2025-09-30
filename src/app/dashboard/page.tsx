@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ModuleCardWithImage from '@/components/ModuleCardWithImage';
@@ -14,7 +15,7 @@ export default function DashboardPage() {
   const [currentModule, setCurrentModule] = useState<string | null>(null);
   
   // Mapping des icônes
-  const iconMap: Record<string, JSX.Element> = {
+  const iconMap: Record<string, React.ReactNode> = {
     'data-science': <Database size={24} className="text-blue-500" />,
     'deep-learning': <Brain size={24} className="text-purple-500" />,
     'ia-generative': <Sparkles size={24} className="text-orange-500" />,

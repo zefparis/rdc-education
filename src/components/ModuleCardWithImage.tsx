@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { motion } from 'framer-motion';
 import { Download, BookOpen, Clock, Volume2 } from 'lucide-react';
 import Link from 'next/link';

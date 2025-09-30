@@ -34,9 +34,7 @@ export default function ModulePage({ params }: ModulePageProps) {
 
   // États pour l'audio
   const [isGenerating, setIsGenerating] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string | null>(
-    courseModule?.audio ?? null
-  );
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
 
   // Si le module n'existe pas, afficher un fallback
   if (!courseModule) {
@@ -74,13 +72,30 @@ export default function ModulePage({ params }: ModulePageProps) {
     content: courseModule.topics ?? [],
   };
 
-  // Handler pour générer l'audio
+  // Handler pour charger/générer l'audio
   const handleListen = async () => {
-    if (audioUrl) return;
+    if (audioUrl) return; // Audio déjà chargé
     if (!courseModule.description) return;
 
     try {
       setIsGenerating(true);
+
+      // D'abord, essayer de charger le MP3 existant
+      if (courseModule.audio) {
+        try {
+          const checkResponse = await fetch(courseModule.audio, { method: 'HEAD' });
+          if (checkResponse.ok) {
+            // Le fichier MP3 existe, l'utiliser directement
+            setAudioUrl(courseModule.audio);
+            setIsGenerating(false);
+            return;
+          }
+        } catch {
+          // Le fichier n'existe pas, continuer avec la génération TTS
+        }
+      }
+
+      // Si le MP3 n'existe pas, générer via TTS
       const text = `Bienvenue au module ${courseModule.title}. ${courseModule.description}`;
 
       const res = await fetch("/api/tts", {
@@ -99,8 +114,8 @@ export default function ModulePage({ params }: ModulePageProps) {
         setAudioUrl(data.audioUrl);
       }
     } catch (error) {
-      console.error("Erreur TTS:", error);
-      alert("Impossible de générer l&apos;audio pour le moment");
+      console.error("Erreur audio:", error);
+      alert("Impossible de charger l&apos;audio pour le moment");
     } finally {
       setIsGenerating(false);
     }

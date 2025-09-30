@@ -34,7 +34,7 @@ export const modulesConfig: Module[] = [
     image: '/images/data-science.jpg',
     pdf: '/modules/data-science/README.md',
     notebook: '/modules/data-science/module_data-science.ipynb',
-    audio: '/modules/data-science/audio-introduction.txt',
+    audio: '/audio/module_data-science.mp3',
     objectives: [
       'Maîtriser Python pour la Data Science',
       'Manipuler des données avec Pandas',
@@ -61,7 +61,7 @@ export const modulesConfig: Module[] = [
     image: '/images/deep-learning.jpg',
     pdf: '/modules/deep-learning/deep-learning-cours-partie1.md',
     notebook: '/modules/deep-learning/module-deep-learning-complet.ipynb',
-    audio: '/modules/deep-learning/audio-introduction.txt',
+    audio: '/audio/module_deep-learning.mp3',
     objectives: [
       'Comprendre les réseaux de neurones',
       'Maîtriser TensorFlow et PyTorch',
@@ -89,7 +89,7 @@ export const modulesConfig: Module[] = [
     image: '/images/ia-generative.jpg',
     pdf: '/modules/ia-generative/ia-generative-cours.md',
     notebook: '/modules/ia-generative/module-ia-generative-complet.ipynb',
-    audio: '/modules/ia-generative/audio-introduction.txt',
+    audio: '/audio/module_ia-generative.mp3',
     objectives: [
       'Générer du texte avec GPT',
       'Créer des images avec DALL·E',
@@ -116,7 +116,7 @@ export const modulesConfig: Module[] = [
     image: '/images/mlops.jpg',
     pdf: '/modules/mlops/mlops-cours.md',
     notebook: '/modules/mlops/module-mlops-complet.ipynb',
-    audio: '/modules/mlops/audio-introduction.txt',
+    audio: '/audio/module_mlops.mp3',
     objectives: [
       'Gérer le cycle de vie d\'un modèle ML',
       'Containeriser avec Docker',
@@ -144,7 +144,7 @@ export const modulesConfig: Module[] = [
     image: '/images/nlp.jpg',
     pdf: '/modules/nlp/nlp-cours.md',
     notebook: '/modules/nlp/module-nlp-complet.ipynb',
-    audio: '/modules/nlp/audio-introduction.txt',
+    audio: '/audio/module_nlp.mp3',
     objectives: [
       'Prétraiter des textes',
       'Utiliser word embeddings',
@@ -171,7 +171,7 @@ export const modulesConfig: Module[] = [
     image: '/images/ml-fondamental.jpg',
     pdf: '/modules/ml-fondamental/ml-fondamental-cours.md',
     notebook: '/modules/ml-fondamental/module_ml-fondamental.ipynb',
-    audio: '/modules/ml-fondamental/audio-introduction.txt',
+    audio: '/audio/module_ml-fondamental.mp3',
     objectives: [
       'Comprendre le Machine Learning',
       'Maîtriser les algorithmes fondamentaux',
