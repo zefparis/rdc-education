@@ -67,7 +67,7 @@ export async function GET() {
     const buffer = Buffer.from(await mp3.arrayBuffer());
 
     // Upload vers Cloudinary
-    const uploadResult: any = await new Promise((resolve, reject) => {
+    const uploadResult = await new Promise<{ secure_url: string }>((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           resource_type: 'video',
@@ -77,7 +77,8 @@ export async function GET() {
         },
         (error, result) => {
           if (error) reject(error);
-          else resolve(result);
+          else if (result) resolve(result);
+          else reject(new Error('Upload failed: no result'));
         }
       );
       uploadStream.end(buffer);
