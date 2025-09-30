@@ -45,6 +45,7 @@ export default function GaleriePage() {
                   src={image.path}
                   alt={image.name}
                   fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 {/* Overlay sombre */}
@@ -98,6 +99,7 @@ export default function GaleriePage() {
                       src={images[selectedImage]?.path || ''}
                       alt={images[selectedImage]?.name || ''}
                       fill
+                      sizes="100vw"
                       className="object-contain"
                     />
                     <div className="absolute inset-0 bg-black/30" />

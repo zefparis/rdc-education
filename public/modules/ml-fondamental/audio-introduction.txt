@@ -1,0 +1,17 @@
+Bienvenue dans le module Machine Learning Fondamental de la plateforme IA-Solution RDC.
+
+Le Machine Learning, ou apprentissage automatique, est la capacité des ordinateurs à apprendre à partir de données sans être explicitement programmés. C'est la technologie qui permet aux machines de s'améliorer avec l'expérience.
+
+Dans ce module, vous apprendrez les bases de l'apprentissage automatique : comment entraîner un modèle à partir de données, comment évaluer ses performances, et comment éviter les erreurs courantes comme le surapprentissage.
+
+Vous découvrirez les algorithmes fondamentaux : la régression linéaire pour prédire des valeurs continues, la régression logistique pour la classification, les k-plus proches voisins, les arbres de décision, et le clustering avec k-means.
+
+Ce module vous montrera comment appliquer le Machine Learning dans des cas concrets en République Démocratique du Congo : prédire les rendements agricoles pour aider les fermiers, détecter les fraudes dans les transactions commerciales, ou classifier automatiquement des documents administratifs.
+
+Le projet final vous guidera dans la création d'un modèle complet, de la collecte des données jusqu'à la prédiction, en passant par l'entraînement et la validation.
+
+Que vous soyez étudiant découvrant le Machine Learning, développeur souhaitant intégrer l'IA dans vos projets, ou entrepreneur cherchant à créer des solutions data-driven, ce module vous donnera toutes les clés pour comprendre et appliquer le Machine Learning de manière pratique et efficace.
+
+Préparez-vous à faire parler vos données !
+
+Bon apprentissage !

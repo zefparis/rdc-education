@@ -6,61 +6,32 @@ import ModuleCardWithImage from '@/components/ModuleCardWithImage';
 import AudioPlayer from '@/components/AudioPlayer';
 import { Brain, Database, Sparkles, Cpu, Network, Code } from 'lucide-react';
 import { getImagePath, MODULE_IMAGE_MAPPING } from '@/lib/images';
+import { modulesConfig } from '@/config/modulesConfig';
 
 export default function DashboardPage() {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [currentModule, setCurrentModule] = useState<string | null>(null);
-  const modules = [
-    {
-      id: 'data-science',
-      title: 'Data Science',
-      description: 'Maîtrisez l\'analyse de données, la visualisation et les statistiques pour extraire des insights précieux.',
-      duration: '8 semaines',
-      level: 'Débutant',
-      icon: <Database size={24} className="text-blue-500" />,
-    },
-    {
-      id: 'deep-learning',
-      title: 'Deep Learning',
-      description: 'Plongez dans les réseaux de neurones profonds, CNN, RNN et architectures avancées.',
-      duration: '10 semaines',
-      level: 'Intermédiaire',
-      icon: <Brain size={24} className="text-blue-500" />,
-    },
-    {
-      id: 'ia-generative',
-      title: 'IA Générative',
-      description: 'Découvrez GPT, DALL-E, Stable Diffusion et créez du contenu avec l\'IA.',
-      duration: '6 semaines',
-      level: 'Intermédiaire',
-      icon: <Sparkles size={24} className="text-blue-500" />,
-    },
-    {
-      id: 'mlops',
-      title: 'MLOps',
-      description: 'Déployez et maintenez des modèles ML en production avec les meilleures pratiques DevOps.',
-      duration: '7 semaines',
-      level: 'Avancé',
-      icon: <Cpu size={24} className="text-blue-500" />,
-    },
-    {
-      id: 'nlp',
-      title: 'Traitement du Langage Naturel',
-      description: 'Analysez et générez du texte avec les techniques NLP modernes et les transformers.',
-      duration: '9 semaines',
-      level: 'Intermédiaire',
-      icon: <Network size={24} className="text-blue-500" />,
-    },
-    {
-      id: 'ml-fundamentals',
-      title: 'Machine Learning Fondamental',
-      description: 'Les bases du ML : régression, classification, clustering et évaluation de modèles.',
-      duration: '8 semaines',
-      level: 'Débutant',
-      icon: <Code size={24} className="text-blue-500" />,
-    },
-  ];
+  
+  // Mapping des icônes
+  const iconMap: Record<string, JSX.Element> = {
+    'data-science': <Database size={24} className="text-blue-500" />,
+    'deep-learning': <Brain size={24} className="text-purple-500" />,
+    'ia-generative': <Sparkles size={24} className="text-orange-500" />,
+    'mlops': <Cpu size={24} className="text-green-500" />,
+    'nlp': <Network size={24} className="text-indigo-500" />,
+    'ml-fondamental': <Code size={24} className="text-yellow-500" />,
+  };
+  
+  // Utiliser la configuration centralisée
+  const modules = modulesConfig.map(module => ({
+    id: module.slug,
+    title: module.title,
+    description: module.description,
+    duration: module.duration,
+    level: module.level,
+    icon: iconMap[module.slug] || <Code size={24} className="text-blue-500" />,
+  }));
 
   const handleListen = async (moduleId: string, moduleTitle: string) => {
     setIsGenerating(true);

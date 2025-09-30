@@ -1,0 +1,17 @@
+Bienvenue dans le module MLOps de la plateforme IA-Solution RDC.
+
+MLOps, ou Machine Learning Operations, représente l'ensemble des pratiques qui permettent de déployer et maintenir des modèles d'intelligence artificielle en production de manière fiable et reproductible.
+
+Dans ce module, vous allez apprendre à gérer le cycle de vie complet d'un modèle : de son entraînement jusqu'à son déploiement en production, en passant par le monitoring et la maintenance continue.
+
+Vous découvrirez les outils essentiels du MLOps. Git pour versionner votre code et vos données. Docker pour créer des environnements reproductibles. MLflow pour suivre vos expérimentations. Et FastAPI pour déployer vos modèles via des APIs REST accessibles.
+
+Ce module vous montrera comment rendre vos modèles utilisables dans des contextes concrets en République Démocratique du Congo. Que ce soit pour déployer un système de diagnostic médical dans plusieurs hôpitaux, créer une application de prédiction agricole accessible aux fermiers, ou optimiser la consommation électrique à Kinshasa.
+
+Le projet final vous guidera dans la création d'un système MLOps complet, de l'entraînement du modèle jusqu'au monitoring en production, en passant par la containerisation et le déploiement.
+
+Que vous soyez data scientist souhaitant déployer vos modèles, développeur cherchant à intégrer l'IA dans vos applications, ou entrepreneur voulant créer des solutions IA fiables, ce module vous donnera les compétences nécessaires pour transformer vos modèles en produits utilisables et maintenables.
+
+Préparez-vous à faire passer vos modèles du notebook à la production !
+
+Bon apprentissage !

@@ -1,0 +1,17 @@
+Bienvenue dans le module Deep Learning de la plateforme IA-Solution RDC.
+
+Le Deep Learning, ou apprentissage profond, est une technologie révolutionnaire qui permet aux ordinateurs d'apprendre à partir d'exemples, tout comme les humains apprennent par l'expérience.
+
+Dans ce module, vous allez découvrir comment fonctionnent les réseaux de neurones artificiels. Ces réseaux sont capables de reconnaître des images, comprendre du texte, prédire des données, et résoudre des problèmes complexes que les méthodes traditionnelles ne peuvent pas traiter.
+
+Vous apprendrez à construire vos propres réseaux de neurones avec TensorFlow et PyTorch, les deux bibliothèques les plus populaires au monde. Vous découvrirez comment entraîner un modèle, éviter le surapprentissage, et optimiser les performances.
+
+Ce module est adapté à la réalité de la République Démocratique du Congo. Tous les exemples pratiques concernent des applications concrètes : détection du paludisme en santé, analyse des maladies du manioc en agriculture, détection de fraudes dans le commerce, et amélioration de l'éducation.
+
+Le projet final vous guidera pas à pas dans la création d'un système de classification de fruits locaux : bananes, mangues et ananas. Vous apprendrez à collecter des données, construire un réseau, l'entraîner, et évaluer ses performances.
+
+Que vous soyez étudiant, chercheur, entrepreneur ou simplement passionné par l'intelligence artificielle, ce module vous donnera les compétences nécessaires pour créer vos propres solutions de Deep Learning adaptées aux défis africains.
+
+Préparez-vous à découvrir une technologie qui transforme déjà le monde, et qui peut transformer l'avenir de la RDC.
+
+Bon apprentissage !

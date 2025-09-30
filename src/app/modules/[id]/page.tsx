@@ -1,172 +1,211 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { useParams } from 'next/navigation';
-import { useState } from 'react';
-import { Download, Clock, BarChart, CheckCircle, FileText, Video, Code, Volume2 } from 'lucide-react';
-import Link from 'next/link';
-import AudioPlayer from '@/components/AudioPlayer';
+import * as React from "react";
+import { useState } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  Volume2,
+  Download,
+  BarChart,
+  Clock,
+  CheckCircle,
+  FileText,
+  Video as VideoIcon,
+  Code,
+  ArrowLeft,
+  BookOpen,
+} from "lucide-react";
+import AudioPlayer from "@/components/AudioPlayer";
+import { modulesConfig } from "@/config/modulesConfig";
 
-export default function ModulePage() {
-  const params = useParams();
-  const moduleId = params.id as string;
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+interface ModulePageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+export default function ModulePage({ params }: ModulePageProps) {
+  // Unwrap params avec React.use()
+  const { id } = React.use(params);
+  
+  // Récupérer le module depuis la configuration
+  const courseModule = modulesConfig.find((m) => m.slug === id);
+
+  // États pour l'audio
   const [isGenerating, setIsGenerating] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<string | null>(
+    courseModule?.audio ?? null
+  );
 
-  // Données des modules (en production, cela viendrait d'une API)
-  const modulesData: Record<string, {
-    title: string;
-    description: string;
-    level: string;
-    duration: string;
-    students: number;
-    content: string[];
-  }> = {
-    'data-science': {
-      title: 'Data Science',
-      description: 'Maîtrisez l\'analyse de données, la visualisation et les statistiques pour extraire des insights précieux de vos données.',
-      level: 'Débutant',
-      duration: '8 semaines',
-      students: 450,
-      content: [
-        'Introduction à Python pour Data Science',
-        'Manipulation de données avec Pandas',
-        'Visualisation avec Matplotlib et Seaborn',
-        'Statistiques descriptives et inférentielles',
-        'Nettoyage et préparation des données',
-        'Analyse exploratoire des données (EDA)',
-        'Introduction au Machine Learning',
-        'Projet final : Analyse de données réelles',
-      ],
-    },
-    'deep-learning': {
-      title: 'Deep Learning',
-      description: 'Plongez dans les réseaux de neurones profonds, CNN, RNN et architectures avancées pour résoudre des problèmes complexes.',
-      level: 'Intermédiaire',
-      duration: '10 semaines',
-      students: 320,
-      content: [
-        'Fondamentaux des réseaux de neurones',
-        'Backpropagation et optimisation',
-        'Réseaux de neurones convolutifs (CNN)',
-        'Réseaux de neurones récurrents (RNN)',
-        'LSTM et GRU',
-        'Transfer Learning',
-        'Architectures modernes (ResNet, VGG, etc.)',
-        'Projet : Classification d\'images',
-      ],
-    },
-    'ia-generative': {
-      title: 'IA Générative',
-      description: 'Découvrez GPT, DALL-E, Stable Diffusion et créez du contenu innovant avec l\'intelligence artificielle générative.',
-      level: 'Intermédiaire',
-      duration: '6 semaines',
-      students: 580,
-      content: [
-        'Introduction à l\'IA générative',
-        'Transformers et attention mechanisms',
-        'GPT et génération de texte',
-        'DALL-E et génération d\'images',
-        'Stable Diffusion',
-        'Fine-tuning de modèles',
-        'Éthique et limites de l\'IA générative',
-        'Projet : Créer une application générative',
-      ],
-    },
+  // Si le module n'existe pas, afficher un fallback
+  if (!courseModule) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center max-w-md"
+        >
+          <div className="text-6xl mb-6">🔍</div>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Module introuvable
+          </h1>
+          <p className="text-gray-400 mb-8">
+            Le module que vous recherchez n&apos;existe pas ou a été déplacé.
+          </p>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+          >
+            <ArrowLeft size={20} />
+            Retour au dashboard
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Construire les métadonnées
+  const meta = {
+    level: courseModule.level ?? "N/A",
+    duration: courseModule.duration ?? "N/A",
+    students: 450,
+    content: courseModule.topics ?? [],
   };
 
-  const courseModule = modulesData[moduleId] || {
-    title: 'Module non trouvé',
-    description: 'Ce module n\'existe pas encore.',
-    level: 'N/A',
-    duration: 'N/A',
-    students: 0,
-    content: [],
-  };
-
+  // Handler pour générer l'audio
   const handleListen = async () => {
-    setIsGenerating(true);
+    if (audioUrl) return;
+    if (!courseModule.description) return;
 
     try {
-      const text = `Bienvenue au module ${courseModule.title}. ${courseModule.description} Ce module contient ${courseModule.content.length} leçons principales.`;
+      setIsGenerating(true);
+      const text = `Bienvenue au module ${courseModule.title}. ${courseModule.description}`;
 
-      const response = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, moduleId }),
+      const res = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text,
+          moduleId: courseModule.slug,
+        }),
       });
 
-      const data = await response.json();
+      if (!res.ok) throw new Error("Erreur lors de la génération audio");
 
-      if (data.success) {
+      const data = await res.json();
+      if (data.success && data.audioUrl) {
         setAudioUrl(data.audioUrl);
-      } else {
-        alert(data.error || 'Erreur lors de la génération audio');
       }
     } catch (error) {
-      console.error('Erreur:', error);
-      alert('Erreur lors de la génération audio');
+      console.error("Erreur TTS:", error);
+      alert("Impossible de générer l&apos;audio pour le moment");
     } finally {
       setIsGenerating(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] py-12">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Button */}
-        <Link
-          href="/dashboard"
-          className="inline-flex items-center text-gray-400 hover:text-white mb-8 transition-colors"
+    <div className="min-h-screen bg-[#0a0a0a] py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="mb-8"
         >
-          ← Retour aux modules
-        </Link>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+          >
+            <ArrowLeft size={18} />
+            <span>Retour aux modules</span>
+          </Link>
+        </motion.div>
 
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          transition={{ delay: 0.1 }}
+          className="mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {courseModule.title}
-          </h1>
-          <p className="text-gray-400 text-lg mb-6">
-            {courseModule.description}
-          </p>
-
-          {/* Meta Info */}
-          <div className="flex flex-wrap gap-4 mb-6">
-            <div className="flex items-center space-x-2 text-gray-300">
-              <BarChart size={20} className="text-blue-500" />
-              <span>{courseModule.level}</span>
+          <div className="flex items-start gap-4 mb-6">
+            <span className="text-5xl md:text-6xl" aria-hidden="true">
+              {courseModule.icon}
+            </span>
+            <div className="flex-1">
+              <h1 className="text-3xl md:text-5xl font-bold text-white mb-3">
+                {courseModule.title}
+              </h1>
+              <p className="text-gray-400 text-base md:text-lg leading-relaxed">
+                {courseModule.description}
+              </p>
             </div>
-            <div className="flex items-center space-x-2 text-gray-300">
-              <Clock size={20} className="text-emerald-500" />
-              <span>{courseModule.duration}</span>
-            </div>
-            <div className="flex items-center space-x-2 text-gray-300">
-              <CheckCircle size={20} className="text-purple-500" />
-              <span>{courseModule.students} étudiants</span>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap gap-4">
-            <button 
-              onClick={handleListen}
-              disabled={isGenerating}
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 disabled:from-gray-600 disabled:to-gray-700 text-white rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-600/50"
-            >
-              <Volume2 size={20} />
-              <span>{isGenerating ? 'Génération...' : 'Écouter le module'}</span>
-            </button>
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-blue-600/50">
-              <Download size={20} />
-              <span>Télécharger le module</span>
-            </button>
           </div>
         </motion.div>
+
+        {/* Stats Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-12"
+        >
+          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-blue-500/30 transition-colors">
+            <div className="flex items-center gap-3">
+              <Clock className="text-blue-500 flex-shrink-0" size={24} />
+              <div>
+                <div className="text-2xl font-bold text-white">
+                  {meta.duration}
+                </div>
+                <div className="text-sm text-gray-400">Durée</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-emerald-500/30 transition-colors">
+            <div className="flex items-center gap-3">
+              <BarChart className="text-emerald-500 flex-shrink-0" size={24} />
+              <div>
+                <div className="text-2xl font-bold text-white">{meta.level}</div>
+                <div className="text-sm text-gray-400">Niveau</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-purple-500/30 transition-colors">
+            <div className="flex items-center gap-3">
+              <CheckCircle
+                className="text-purple-500 flex-shrink-0"
+                size={24}
+              />
+              <div>
+                <div className="text-2xl font-bold text-white">
+                  {meta.content.length}
+                </div>
+                <div className="text-sm text-gray-400">Chapitres</div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Loading Audio */}
+        {isGenerating && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6"
+          >
+            <div className="flex items-center gap-3">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+              <span className="text-gray-300">
+                Génération de la voix-off en cours...
+              </span>
+            </div>
+          </motion.div>
+        )}
 
         {/* Audio Player */}
         {audioUrl && !isGenerating && (
@@ -175,62 +214,218 @@ export default function ModulePage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <AudioPlayer audioUrl={audioUrl} title={`Voix off - ${courseModule.title}`} />
+            <AudioPlayer
+              audioUrl={audioUrl}
+              title={`Voix-off - ${courseModule.title}`}
+            />
           </motion.div>
         )}
 
-        {/* Content Section */}
+        {/* Action Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-8 mb-8"
+          transition={{ delay: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12"
         >
-          <h2 className="text-2xl font-bold text-white mb-6">Contenu du module</h2>
-          <div className="space-y-3">
-            {courseModule.content.map((item: string, index: number) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 + index * 0.05 }}
-                className="flex items-start space-x-3 p-4 bg-[#0a0a0a] rounded-lg hover:bg-[#151515] transition-colors"
-              >
-                <CheckCircle size={20} className="text-emerald-500 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{item}</span>
-              </motion.div>
-            ))}
-          </div>
+          {/* Bouton Audio */}
+          <button
+            onClick={handleListen}
+            disabled={isGenerating || !!audioUrl}
+            className="group relative bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 disabled:from-gray-600 disabled:to-gray-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
+            aria-label="Écouter le module"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <Volume2 size={32} />
+              <Volume2 size={24} className="opacity-50" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">Voix-off</h3>
+            <p className="text-orange-100 text-sm">
+              {isGenerating
+                ? "Génération..."
+                : audioUrl
+                ? "Audio prêt"
+                : "Écouter l&apos;introduction"}
+            </p>
+          </button>
+
+          {/* Bouton PDF */}
+          {courseModule.pdf ? (
+            <a
+              href={courseModule.pdf}
+              download
+              className="group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
+              aria-label="Télécharger le support PDF"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <FileText size={32} />
+                <Download size={24} />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Support PDF</h3>
+              <p className="text-blue-100 text-sm">
+                Télécharger le cours complet
+              </p>
+            </a>
+          ) : (
+            <button
+              disabled
+              className="relative bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl p-6 cursor-not-allowed opacity-60"
+              title="Bientôt disponible"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <FileText size={32} />
+                <Download size={24} />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Support PDF</h3>
+              <p className="text-gray-300 text-sm">Bientôt disponible</p>
+            </button>
+          )}
+
+          {/* Bouton Notebook */}
+          {courseModule.notebook ? (
+            <a
+              href={courseModule.notebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
+              aria-label="Ouvrir le notebook Jupyter"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <BookOpen size={32} />
+                <ArrowLeft className="rotate-180" size={24} />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Notebook Jupyter</h3>
+              <p className="text-purple-100 text-sm">
+                Ouvrir dans le navigateur
+              </p>
+            </a>
+          ) : (
+            <button
+              disabled
+              className="relative bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl p-6 cursor-not-allowed opacity-60"
+              title="Bientôt disponible"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <BookOpen size={32} />
+                <ArrowLeft className="rotate-180" size={24} />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Notebook Jupyter</h3>
+              <p className="text-gray-300 text-sm">Bientôt disponible</p>
+            </button>
+          )}
         </motion.div>
 
-        {/* Resources Section */}
+        {/* Objectifs */}
+        {courseModule.objectives && courseModule.objectives.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 md:p-8 mb-8"
+          >
+            <h2 className="text-2xl font-bold text-white mb-6">
+              Objectifs d&apos;apprentissage
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {courseModule.objectives.map((objective, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 + index * 0.05 }}
+                  className="flex items-start gap-3"
+                >
+                  <CheckCircle
+                    className="text-emerald-500 flex-shrink-0 mt-1"
+                    size={20}
+                  />
+                  <span className="text-gray-300">{objective}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Contenu du module */}
+        {meta.content.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 md:p-8 mb-8"
+          >
+            <h2 className="text-2xl font-bold text-white mb-6">
+              Contenu du module
+            </h2>
+            <div className="space-y-3">
+              {meta.content.map((topic, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 + index * 0.03 }}
+                  className="flex items-center gap-4 p-4 bg-[#0a0a0a] rounded-lg border border-[#2a2a2a] hover:border-blue-500/50 transition-colors group"
+                >
+                  <div className="flex-shrink-0 w-8 h-8 bg-blue-600 group-hover:bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm transition-colors">
+                    {index + 1}
+                  </div>
+                  <span className="text-gray-300 group-hover:text-white transition-colors">
+                    {topic}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Ressources */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          transition={{ delay: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12"
         >
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-blue-500/50 transition-colors">
+          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-blue-500/30 transition-colors">
             <FileText size={32} className="text-blue-500 mb-4" />
-            <h3 className="text-xl font-bold text-white mb-2">Documents PDF</h3>
+            <h3 className="text-xl font-bold text-white mb-2">
+              Documents PDF
+            </h3>
             <p className="text-gray-400 text-sm">
               Supports de cours et exercices pratiques
             </p>
           </div>
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-emerald-500/50 transition-colors">
-            <Video size={32} className="text-emerald-500 mb-4" />
+
+          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-emerald-500/30 transition-colors">
+            <VideoIcon size={32} className="text-emerald-500 mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">Vidéos</h3>
             <p className="text-gray-400 text-sm">
               Tutoriels vidéo et démonstrations
             </p>
           </div>
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-purple-500/50 transition-colors">
+
+          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-purple-500/30 transition-colors">
             <Code size={32} className="text-purple-500 mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">Code Source</h3>
             <p className="text-gray-400 text-sm">
               Exemples de code et projets
             </p>
           </div>
+        </motion.div>
+
+        {/* CTA Final */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="text-center"
+        >
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
+          >
+            <ArrowLeft size={20} />
+            Retour aux modules
+          </Link>
         </motion.div>
       </div>
     </div>

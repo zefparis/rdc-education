@@ -1,0 +1,17 @@
+Bienvenue dans le module d'IA Générative de la plateforme IA-Solution RDC.
+
+L'intelligence artificielle générative représente une révolution technologique qui permet de créer du contenu nouveau : texte, images, audio et même vidéo, à partir de simples instructions.
+
+Dans ce module, vous allez découvrir comment utiliser les outils les plus avancés comme ChatGPT pour générer du texte, DALL·E pour créer des images, et les systèmes de synthèse vocale pour produire de l'audio de qualité professionnelle.
+
+Vous apprendrez à créer des prompts efficaces, à générer des contenus multimodaux, et à appliquer ces technologies à des cas concrets adaptés à la République Démocratique du Congo.
+
+Ce module vous montrera comment l'IA générative peut transformer l'éducation en créant des supports de cours illustrés et personnalisés. Comment elle peut aider l'agriculture avec des guides visuels et des bulletins météo en langues locales. Comment elle peut améliorer la santé publique avec des campagnes de sensibilisation impactantes. Et comment elle peut enrichir notre culture en préservant et modernisant notre patrimoine artistique.
+
+Le projet final vous guidera dans la création d'un générateur d'affiches éducatives complet, combinant texte, image et audio pour créer des campagnes de sensibilisation efficaces.
+
+Que vous soyez étudiant, enseignant, entrepreneur ou créatif, ce module vous donnera les compétences pour utiliser l'IA générative de manière pratique et créative, et contribuer au développement de solutions innovantes pour la RDC.
+
+Préparez-vous à libérer votre créativité avec l'intelligence artificielle !
+
+Bon apprentissage !

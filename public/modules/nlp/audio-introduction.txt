@@ -1,0 +1,17 @@
+Bienvenue dans le module NLP, le traitement automatique du langage naturel, de la plateforme IA-Solution RDC.
+
+Le NLP est le domaine de l'intelligence artificielle qui permet aux ordinateurs de comprendre, interpréter et générer du langage humain, que ce soit en français, en lingala, en swahili ou dans d'autres langues locales.
+
+Dans ce module, vous apprendrez les bases du traitement du texte : comment nettoyer et préparer des données textuelles, comment tokeniser et vectoriser des mots, et comment utiliser des modèles modernes comme BERT ou GPT pour analyser et générer du texte.
+
+Vous découvrirez les techniques classiques comme le Bag-of-Words et TF-IDF, ainsi que les approches modernes basées sur les word embeddings et les transformers qui révolutionnent le domaine.
+
+Ce module vous montrera comment appliquer le NLP à des cas concrets en République Démocratique du Congo. Vous apprendrez à créer des chatbots éducatifs pour répondre aux questions d'étudiants, à traduire des textes entre le français et les langues locales, et à analyser automatiquement des documents administratifs.
+
+Le projet final vous guidera dans la création d'un chatbot éducatif intelligent capable de comprendre les questions des étudiants et d'y répondre de manière pertinente en utilisant la similarité sémantique.
+
+Que vous soyez développeur souhaitant intégrer du NLP dans vos applications, data scientist cherchant à analyser des textes, ou entrepreneur voulant créer des solutions de communication intelligentes, ce module vous donnera les compétences nécessaires pour travailler avec le langage naturel.
+
+Préparez-vous à donner la parole à vos machines !
+
+Bon apprentissage !

@@ -1,0 +1,7 @@
+Bienvenue dans le module Data Science de la plateforme IA-Solution RDC.
+
+Vous allez découvrir comment analyser et visualiser des données, comprendre les bases de la statistique et préparer vos jeux de données pour construire des modèles intelligents adaptés aux réalités de la République Démocratique du Congo.
+
+Dans ce module, vous apprendrez Python de base, la manipulation de données avec Pandas, la visualisation avec Matplotlib et Seaborn, ainsi que les statistiques descriptives essentielles.
+
+Bon apprentissage !
