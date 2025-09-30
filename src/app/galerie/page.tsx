@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { X, ZoomIn } from 'lucide-react';
-import Image from 'next/image';
 
 export default function GaleriePage() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);

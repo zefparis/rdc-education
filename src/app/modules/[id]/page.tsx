@@ -14,7 +14,14 @@ export default function ModulePage() {
   const [isGenerating, setIsGenerating] = useState(false);
 
   // Données des modules (en production, cela viendrait d'une API)
-  const modulesData: Record<string, any> = {
+  const modulesData: Record<string, {
+    title: string;
+    description: string;
+    level: string;
+    duration: string;
+    students: number;
+    content: string[];
+  }> = {
     'data-science': {
       title: 'Data Science',
       description: 'Maîtrisez l\'analyse de données, la visualisation et les statistiques pour extraire des insights précieux de vos données.',
@@ -68,7 +75,7 @@ export default function ModulePage() {
     },
   };
 
-  const module = modulesData[moduleId] || {
+  const courseModule = modulesData[moduleId] || {
     title: 'Module non trouvé',
     description: 'Ce module n\'existe pas encore.',
     level: 'N/A',
@@ -81,7 +88,7 @@ export default function ModulePage() {
     setIsGenerating(true);
 
     try {
-      const text = `Bienvenue au module ${module.title}. ${module.description} Ce module contient ${module.content.length} leçons principales.`;
+      const text = `Bienvenue au module ${courseModule.title}. ${courseModule.description} Ce module contient ${courseModule.content.length} leçons principales.`;
 
       const response = await fetch('/api/tts', {
         method: 'POST',
@@ -122,25 +129,25 @@ export default function ModulePage() {
           className="mb-8"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {module.title}
+            {courseModule.title}
           </h1>
           <p className="text-gray-400 text-lg mb-6">
-            {module.description}
+            {courseModule.description}
           </p>
 
           {/* Meta Info */}
           <div className="flex flex-wrap gap-4 mb-6">
             <div className="flex items-center space-x-2 text-gray-300">
               <BarChart size={20} className="text-blue-500" />
-              <span>{module.level}</span>
+              <span>{courseModule.level}</span>
             </div>
             <div className="flex items-center space-x-2 text-gray-300">
               <Clock size={20} className="text-emerald-500" />
-              <span>{module.duration}</span>
+              <span>{courseModule.duration}</span>
             </div>
             <div className="flex items-center space-x-2 text-gray-300">
               <CheckCircle size={20} className="text-purple-500" />
-              <span>{module.students} étudiants</span>
+              <span>{courseModule.students} étudiants</span>
             </div>
           </div>
 
@@ -168,7 +175,7 @@ export default function ModulePage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <AudioPlayer audioUrl={audioUrl} title={`Voix off - ${module.title}`} />
+            <AudioPlayer audioUrl={audioUrl} title={`Voix off - ${courseModule.title}`} />
           </motion.div>
         )}
 
@@ -181,7 +188,7 @@ export default function ModulePage() {
         >
           <h2 className="text-2xl font-bold text-white mb-6">Contenu du module</h2>
           <div className="space-y-3">
-            {module.content.map((item: string, index: number) => (
+            {courseModule.content.map((item: string, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}

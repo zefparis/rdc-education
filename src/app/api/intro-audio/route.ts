@@ -61,12 +61,13 @@ export async function GET() {
       cached: false,
       message: 'Audio d\'introduction généré avec succès',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erreur génération audio intro:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
     return NextResponse.json(
       { 
         error: 'Erreur lors de la génération de l\'audio d\'introduction',
-        details: error.message 
+        details: errorMessage 
       },
       { status: 500 }
     );

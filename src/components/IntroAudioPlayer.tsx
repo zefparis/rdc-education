@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Volume2, VolumeX, Play, Pause, Loader2 } from 'lucide-react';
+import { Volume2, Play, Pause, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function IntroAudioPlayer() {
@@ -24,7 +24,7 @@ export default function IntroAudioPlayer() {
       if (response.ok) {
         setAudioReady(true);
       }
-    } catch (err) {
+    } catch {
       // Audio pas encore généré
       setAudioReady(false);
     }
@@ -50,9 +50,9 @@ export default function IntroAudioPlayer() {
       } else {
         setError(data.error || 'Erreur lors de la génération');
       }
-    } catch (err) {
-      setError('Erreur de connexion à l\'API');
-      console.error(err);
+    } catch (error) {
+      setError('Erreur de connexion à l&apos;API');
+      console.error(error);
     } finally {
       setIsGenerating(false);
     }
@@ -75,8 +75,8 @@ export default function IntroAudioPlayer() {
       try {
         await audio.play();
         setIsPlaying(true);
-      } catch (err) {
-        console.error('Erreur lecture:', err);
+      } catch (error) {
+        console.error('Erreur lecture:', error);
         setError('Erreur lors de la lecture');
       }
     }
@@ -87,7 +87,7 @@ export default function IntroAudioPlayer() {
   };
 
   const handleAudioError = () => {
-    setError('Erreur de chargement de l\'audio');
+    setError('Erreur de chargement de l&apos;audio');
     setIsLoading(false);
   };
 
@@ -109,7 +109,7 @@ export default function IntroAudioPlayer() {
         {isGenerating ? (
           <>
             <Loader2 size={24} className="animate-spin" />
-            <span>Génération de l'audio...</span>
+            <span>Génération de l&apos;audio...</span>
           </>
         ) : isLoading ? (
           <>
@@ -124,7 +124,7 @@ export default function IntroAudioPlayer() {
         ) : (
           <>
             <Volume2 size={24} className="group-hover:animate-pulse" />
-            <span>🔊 Écouter l'introduction</span>
+            <span>🔊 Écouter l&apos;introduction</span>
           </>
         )}
       </motion.button>

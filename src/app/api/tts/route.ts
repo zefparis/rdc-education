@@ -65,12 +65,13 @@ export async function POST(request: NextRequest) {
       audioUrl: `/audio/${audioFileName}`,
       cached: false,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erreur TTS:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
     return NextResponse.json(
       { 
         error: 'Erreur lors de la génération de l\'audio',
-        details: error.message 
+        details: errorMessage 
       },
       { status: 500 }
     );
