@@ -33,11 +33,17 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-emerald-600/20 pointer-events-none" />
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/images/education/education_1.jpg)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-[#0a0a0a]" />
+        </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="text-center space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

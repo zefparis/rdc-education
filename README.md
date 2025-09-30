@@ -27,36 +27,59 @@ Ia-Solution RDC est une plateforme d'apprentissage moderne dédiée à l'enseign
 - **Framework**: Next.js 15.5.4 (App Router)
 - **Language**: TypeScript
 - **Styling**: TailwindCSS 4
-- **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **Fonts**: Geist Sans & Geist Mono
 - **IA/TTS**: OpenAI API (Text-to-Speech)
 - **Carrousel**: Embla Carousel React
 
-## 📦 Installation
+## 🚀 Installation
 
-```bash
-# Cloner le projet
-git clone <repository-url>
+### Prérequis
 
-# Installer les dépendances
-npm install
+- Node.js 18+ et npm
+- Un éditeur de code (VS Code recommandé)
+- Clé API OpenAI (pour TTS)
+- Clé API Unsplash (pour images)
 
-# Configurer la clé API OpenAI
-# Créer un fichier .env.local et ajouter :
-# OPENAI_API_KEY=your_openai_api_key_here
+### Étapes
 
-# Lancer le serveur de développement
-npm run dev
-```
+1. **Cloner le projet**
+   ```bash
+   git clone <url-du-repo>
+   cd ia-solution-rdc
+   ```
 
-Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
+2. **Installer les dépendances**
+   ```bash
+   npm install
+   ```
+
+3. **Configurer les variables d'environnement**
+   
+   Créer un fichier `.env.local` à la racine :
+   ```env
+   OPENAI_API_KEY=votre_cle_openai_ici
+   UNSPLASH_ACCESS_KEY=votre_cle_unsplash_ici
+   ```
+
+4. **Télécharger les images** (optionnel)
+   ```bash
+   npm run fetch:images
+   ```
+
+5. **Lancer le serveur de développement**
+   ```bash
+   npm run dev
+   ```
+
+6. **Ouvrir dans le navigateur**
+   ```
+   http://localhost:3000
+   ```dans votre navigateur.
 
 ## 🔑 Configuration OpenAI
 
 Pour utiliser la fonctionnalité de voix off :
-
-1. Créez un compte sur [OpenAI Platform](https://platform.openai.com/)
 2. Générez une clé API
 3. Ajoutez-la dans `.env.local` :
    ```

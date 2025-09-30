@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fetch:images": "ts-node scripts/fetch-images.ts"
   },
   "dependencies": {
+    "axios": "^1.7.9",
     "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.5.1",
@@ -25,9 +27,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^16.4.5",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

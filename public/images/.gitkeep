@@ -1,0 +1,2 @@
+# Ce fichier garde le dossier images/ dans Git
+# Les images téléchargées seront ignorées par .gitignore

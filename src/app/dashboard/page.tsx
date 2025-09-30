@@ -2,9 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import ModuleCard from '@/components/ModuleCard';
+import ModuleCardWithImage from '@/components/ModuleCardWithImage';
 import AudioPlayer from '@/components/AudioPlayer';
 import { Brain, Database, Sparkles, Cpu, Network, Code } from 'lucide-react';
+import { getImagePath, MODULE_IMAGE_MAPPING } from '@/lib/images';
 
 export default function DashboardPage() {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -154,19 +155,25 @@ export default function DashboardPage() {
 
         {/* Modules Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {modules.map((module, index) => (
-            <motion.div
-              key={module.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + index * 0.05 }}
-            >
-              <ModuleCard 
-                {...module} 
-                onListen={() => handleListen(module.id, module.title)}
-              />
-            </motion.div>
-          ))}
+          {modules.map((module, index) => {
+            const theme = MODULE_IMAGE_MAPPING[module.id] || 'ai';
+            const imagePath = getImagePath(theme, (index % 5) + 1);
+            
+            return (
+              <motion.div
+                key={module.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + index * 0.05 }}
+              >
+                <ModuleCardWithImage 
+                  {...module}
+                  imagePath={imagePath}
+                  onListen={() => handleListen(module.id, module.title)}
+                />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </div>
