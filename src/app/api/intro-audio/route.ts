@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import fs from 'fs';
-import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+
+// Configuration Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const INTRO_TEXT = `Bienvenue sur Ia-Solution RDC, la première plateforme en République Démocratique du Congo dédiée à l'apprentissage de l'intelligence artificielle.
 Notre mission est simple : rendre l'IA accessible à tous les étudiants, enseignants et professionnels congolais. L'intelligence artificielle n'est pas seulement une technologie du futur, c'est déjà une réalité qui transforme l'agriculture, la santé, la finance et l'éducation dans le monde entier.
@@ -11,64 +17,86 @@ Explorez, apprenez, et faites partie du changement avec Ia-Solution RDC.`;
 
 export async function GET() {
   try {
-    // Vérifier si la clé API est configurée
+    // Vérifier les clés API
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json(
-        { error: 'Clé API OpenAI non configurée. Ajoutez OPENAI_API_KEY dans .env.local' },
+        { error: 'Clé API OpenAI non configurée. Ajoutez OPENAI_API_KEY dans les variables Railway.' },
         { status: 500 }
       );
     }
 
-    const audioDir = path.join(process.cwd(), 'public', 'audio');
-    const audioFilePath = path.join(audioDir, 'intro.mp3');
+    if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY) {
+      return NextResponse.json(
+        { error: 'Cloudinary non configuré. Ajoutez les variables CLOUDINARY_* sur Railway.' },
+        { status: 500 }
+      );
+    }
 
-    // Vérifier si le fichier existe déjà
-    if (fs.existsSync(audioFilePath)) {
-      return NextResponse.json({
-        success: true,
-        audioUrl: '/audio/intro.mp3',
-        cached: true,
-        message: 'Audio d\'introduction déjà disponible',
+    const publicId = 'ia-solution-rdc/intro';
+
+    // Vérifier si l'audio existe déjà sur Cloudinary
+    try {
+      const existingFile = await cloudinary.api.resource(publicId, {
+        resource_type: 'video', // MP3 est considéré comme 'video' dans Cloudinary
       });
+
+      if (existingFile && existingFile.secure_url) {
+        return NextResponse.json({
+          success: true,
+          audioUrl: existingFile.secure_url,
+          cached: true,
+          message: 'Audio d\'introduction déjà disponible sur Cloudinary',
+        });
+      }
+    } catch {
+      // Fichier n'existe pas encore, on va le créer
     }
 
-    // Créer le dossier audio s'il n'existe pas
-    if (!fs.existsSync(audioDir)) {
-      fs.mkdirSync(audioDir, { recursive: true });
-    }
-
-    // Initialiser le client OpenAI
+    // Générer l'audio avec OpenAI TTS
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    // Générer l'audio avec OpenAI TTS
     const mp3 = await openai.audio.speech.create({
-      model: 'tts-1-hd', // Meilleure qualité pour l'intro
-      voice: 'alloy', // Voix française claire et professionnelle
+      model: 'tts-1-hd',
+      voice: 'alloy',
       input: INTRO_TEXT,
-      speed: 0.95, // Légèrement plus lent pour une meilleure compréhension
+      speed: 0.95,
     });
 
-    // Convertir la réponse en buffer
     const buffer = Buffer.from(await mp3.arrayBuffer());
 
-    // Sauvegarder le fichier
-    fs.writeFileSync(audioFilePath, buffer);
+    // Upload vers Cloudinary
+    const uploadResult = await new Promise<{ secure_url: string }>((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          resource_type: 'video',
+          public_id: publicId,
+          folder: 'ia-solution-rdc',
+          format: 'mp3',
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else if (result) resolve(result);
+          else reject(new Error('Upload failed: no result'));
+        }
+      );
+      uploadStream.end(buffer);
+    });
 
     return NextResponse.json({
       success: true,
-      audioUrl: '/audio/intro.mp3',
+      audioUrl: uploadResult.secure_url,
       cached: false,
-      message: 'Audio d\'introduction généré avec succès',
+      message: 'Audio d\'introduction généré et stocké sur Cloudinary',
     });
   } catch (error) {
     console.error('Erreur génération audio intro:', error);
     const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
     return NextResponse.json(
-      { 
+      {
         error: 'Erreur lors de la génération de l\'audio d\'introduction',
-        details: errorMessage 
+        details: errorMessage,
       },
       { status: 500 }
     );
