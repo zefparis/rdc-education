@@ -3,10 +3,6 @@ import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const INTRO_TEXT = `Bienvenue sur Ia-Solution RDC, la première plateforme en République Démocratique du Congo dédiée à l'apprentissage de l'intelligence artificielle.
 Notre mission est simple : rendre l'IA accessible à tous les étudiants, enseignants et professionnels congolais. L'intelligence artificielle n'est pas seulement une technologie du futur, c'est déjà une réalité qui transforme l'agriculture, la santé, la finance et l'éducation dans le monde entier.
 Ici, vous trouverez des modules de formation clairs et adaptés à votre rythme. Vous n'avez pas besoin d'être un expert en informatique pour commencer. Pas à pas, vous découvrirez les bases de la science des données, du machine learning, du deep learning et des applications concrètes de l'IA dans notre pays.
@@ -40,6 +36,11 @@ export async function GET() {
     if (!fs.existsSync(audioDir)) {
       fs.mkdirSync(audioDir, { recursive: true });
     }
+
+    // Initialiser le client OpenAI
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     // Générer l'audio avec OpenAI TTS
     const mp3 = await openai.audio.speech.create({

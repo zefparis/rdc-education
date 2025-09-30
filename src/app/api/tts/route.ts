@@ -3,11 +3,6 @@ import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
 
-// Initialiser le client OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(request: NextRequest) {
   try {
     const { text, moduleId } = await request.json();
@@ -45,6 +40,11 @@ export async function POST(request: NextRequest) {
     if (!fs.existsSync(audioDir)) {
       fs.mkdirSync(audioDir, { recursive: true });
     }
+
+    // Initialiser le client OpenAI
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     // Générer l'audio avec OpenAI TTS
     const mp3 = await openai.audio.speech.create({
