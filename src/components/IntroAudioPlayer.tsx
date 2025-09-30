@@ -67,11 +67,15 @@ export default function IntroAudioPlayer() {
   };
 
   const togglePlay = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
+    // Si pas d'URL, générer l'audio d'abord
     if (!audioUrl) {
       await generateAudio();
+      return;
+    }
+
+    const audio = audioRef.current;
+    if (!audio) {
+      console.error('Audio element not found');
       return;
     }
 
