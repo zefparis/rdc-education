@@ -105,10 +105,12 @@ export default function JupyterTutorial({ onClose }: JupyterTutorialProps) {
       {/* Bouton pour rouvrir le tutoriel */}
       <button
         onClick={openTutorial}
-        className="fixed bottom-6 right-6 z-40 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 font-medium"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40 px-3 py-2 md:px-4 md:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 text-sm md:text-base font-medium"
       >
-        <FileCode size={20} />
-        📖 Revoir le tutoriel
+        <FileCode size={18} className="md:hidden" />
+        <FileCode size={20} className="hidden md:block" />
+        <span className="hidden sm:inline">📖 Revoir le tutoriel</span>
+        <span className="sm:hidden">📖</span>
       </button>
 
       {/* Modal du tutoriel */}
@@ -129,25 +131,26 @@ export default function JupyterTutorial({ onClose }: JupyterTutorialProps) {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
             >
               <div
-                className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Header */}
-                <div className="relative p-6 border-b border-gray-200">
+                <div className="relative p-4 sm:p-6 border-b border-gray-200">
                   <button
                     onClick={handleClose}
-                    className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 sm:p-2 hover:bg-gray-100 rounded-full transition-colors"
                     aria-label="Fermer"
                   >
-                    <X size={24} className="text-gray-600" />
+                    <X size={20} className="text-gray-600 sm:hidden" />
+                    <X size={24} className="text-gray-600 hidden sm:block" />
                   </button>
-                  <h2 className="text-2xl font-bold text-gray-900 pr-10">
+                  <h2 className="text-lg sm:text-2xl font-bold text-gray-900 pr-8 sm:pr-10">
                     Guide d&apos;utilisation des Notebooks Jupyter
                   </h2>
-                  <p className="text-gray-600 mt-2">
+                  <p className="text-sm sm:text-base text-gray-600 mt-2">
                     Étape {currentStep + 1} sur {tutorialSteps.length}
                   </p>
                   {/* Barre de progression */}
@@ -162,7 +165,7 @@ export default function JupyterTutorial({ onClose }: JupyterTutorialProps) {
                 </div>
 
                 {/* Contenu de l'étape */}
-                <div className="p-8">
+                <div className="p-4 sm:p-6 md:p-8">
                   <motion.div
                     key={currentStep}
                     initial={{ opacity: 0, x: 20 }}
@@ -172,44 +175,45 @@ export default function JupyterTutorial({ onClose }: JupyterTutorialProps) {
                     className="text-center"
                   >
                     {/* Icône */}
-                    <div className="flex justify-center mb-6">
-                      <div className="p-4 bg-gray-100 rounded-full">
+                    <div className="flex justify-center mb-4 sm:mb-6">
+                      <div className="p-3 sm:p-4 bg-gray-100 rounded-full">
                         {currentStepData.icon}
                       </div>
                     </div>
 
                     {/* Titre */}
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                       {currentStepData.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-700 text-lg leading-relaxed">
+                    <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
                       {currentStepData.description}
                     </p>
                   </motion.div>
                 </div>
 
                 {/* Footer avec boutons de navigation */}
-                <div className="p-6 border-t border-gray-200 flex justify-between items-center">
+                <div className="p-3 sm:p-4 md:p-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
                   {/* Bouton Précédent */}
                   <button
                     onClick={handlePrevious}
                     disabled={currentStep === 0}
-                    className="px-6 py-3 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:text-gray-400 text-gray-800 rounded-lg font-medium transition-colors flex items-center gap-2 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:text-gray-400 text-gray-800 rounded-lg text-sm sm:text-base font-medium transition-colors flex items-center justify-center gap-2 disabled:cursor-not-allowed"
                   >
-                    <ChevronLeft size={20} />
+                    <ChevronLeft size={18} className="sm:hidden" />
+                    <ChevronLeft size={20} className="hidden sm:block" />
                     Précédent
                   </button>
 
                   {/* Indicateurs de points */}
-                  <div className="flex gap-2">
+                  <div className="flex gap-1.5 sm:gap-2">
                     {tutorialSteps.map((_, index) => (
                       <div
                         key={index}
-                        className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                        className={`h-1.5 sm:h-2 w-1.5 sm:w-2 rounded-full transition-all duration-300 ${
                           index === currentStep
-                            ? 'bg-blue-600 w-8'
+                            ? 'bg-blue-600 w-6 sm:w-8'
                             : index < currentStep
                             ? 'bg-emerald-500'
                             : 'bg-gray-300'
@@ -222,17 +226,19 @@ export default function JupyterTutorial({ onClose }: JupyterTutorialProps) {
                   {currentStep < tutorialSteps.length - 1 ? (
                     <button
                       onClick={handleNext}
-                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
+                      className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm sm:text-base font-medium transition-colors flex items-center justify-center gap-2"
                     >
                       Suivant
-                      <ChevronRight size={20} />
+                      <ChevronRight size={18} className="sm:hidden" />
+                      <ChevronRight size={20} className="hidden sm:block" />
                     </button>
                   ) : (
                     <button
                       onClick={handleFinish}
-                      className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
+                      className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm sm:text-base font-medium transition-colors flex items-center justify-center gap-2"
                     >
-                      <Check size={20} />
+                      <Check size={18} className="sm:hidden" />
+                      <Check size={20} className="hidden sm:block" />
                       J&apos;ai compris ✅
                     </button>
                   )}
