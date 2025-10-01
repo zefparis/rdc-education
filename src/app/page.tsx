@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Brain, Sparkles, Users, BookOpen } from 'lucide-react';
+import { ArrowRight, Brain, Sparkles, Users, BookOpen, Rocket, Volume2 } from 'lucide-react';
 import ImageCarousel from '@/components/ImageCarousel';
 import IntroAudioPlayer from '@/components/IntroAudioPlayer';
 
@@ -31,75 +31,151 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0">
-          <div 
-            className="absolute inset-0"
-            style={{ 
-              backgroundImage: 'url(/images/education/education_1.jpg)',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center center',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: '#0a0a0a'
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* Hero Section - Split Layout */}
+      <section className="relative overflow-hidden min-h-screen flex items-center">
+        {/* Background with Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a]">
+          <div className="absolute inset-0 opacity-20" 
+            style={{
+              backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)'
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#1a1a1a]" />
         </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="text-center space-y-8">
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            {/* Left Column - Content */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
             >
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-                <span className="bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent">
+              {/* Title with Glow Effect */}
+              <div>
+                <h1 
+                  className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6"
+                  style={{
+                    color: '#60a5fa',
+                    textShadow: '0 0 40px rgba(96, 165, 250, 0.5), 0 0 80px rgba(96, 165, 250, 0.3)'
+                  }}
+                >
                   Ia-Solution RDC
-                </span>
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-4">
-                Apprendre l&apos;IA en République Démocratique du Congo
-              </p>
-              <p className="text-gray-400 text-lg">
-                Filiale de <span className="text-blue-400 font-semibold">Ia-Solution France</span>
-              </p>
+                </h1>
+                <p className="text-xl md:text-2xl text-gray-300 mb-4 leading-relaxed">
+                  Apprendre l&apos;IA en République Démocratique du Congo
+                </p>
+                <p className="text-gray-400 text-lg flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                  Filiale de <span className="text-blue-400 font-semibold">Ia-Solution France</span>
+                </p>
+              </div>
+
+              {/* CTA Buttons - Side by Side */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                {/* Primary CTA */}
+                <Link
+                  href="/auth"
+                  className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 shadow-2xl shadow-blue-600/50 hover:shadow-blue-600/70"
+                >
+                  <Rocket size={24} className="group-hover:rotate-12 transition-transform" />
+                  <span>🚀 Commencer maintenant</span>
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+                </Link>
+
+                {/* Secondary CTA */}
+                <Link
+                  href="/dashboard"
+                  className="group px-8 py-4 bg-transparent hover:bg-blue-600/10 text-white rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 border-2 border-blue-400/50 hover:border-blue-400 shadow-lg"
+                >
+                  <BookOpen size={20} />
+                  <span>📚 Explorer les modules</span>
+                </Link>
+              </motion.div>
+
+              {/* Audio Button - Smaller */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="pt-4"
+              >
+                <IntroAudioPlayer />
+              </motion.div>
+
+              {/* Stats */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-800"
+              >
+                <div>
+                  <div className="text-3xl font-bold text-blue-400">6+</div>
+                  <div className="text-sm text-gray-400">Modules IA</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-emerald-400">1000+</div>
+                  <div className="text-sm text-gray-400">Étudiants</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-purple-400">50+</div>
+                  <div className="text-sm text-gray-400">Heures</div>
+                </div>
+              </motion.div>
             </motion.div>
 
-            {/* Bouton Audio Introduction */}
+            {/* Right Column - Illustration */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-8"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative hidden lg:block"
             >
-              <IntroAudioPlayer />
+              <div className="relative">
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-emerald-600/20 rounded-2xl blur-3xl"></div>
+                
+                {/* Image */}
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-blue-500/20">
+                  <img
+                    src="/images/education/education_1.jpg"
+                    alt="IA Education en RDC"
+                    className="w-full h-auto object-cover"
+                    style={{
+                      boxShadow: '0 0 60px rgba(59, 130, 246, 0.3)'
+                    }}
+                  />
+                  {/* Overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent to-transparent"></div>
+                </div>
+
+                {/* Floating Elements */}
+                <motion.div
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -top-6 -right-6 p-4 bg-blue-600 rounded-2xl shadow-2xl"
+                >
+                  <Brain size={32} className="text-white" />
+                </motion.div>
+
+                <motion.div
+                  animate={{ y: [0, 10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  className="absolute -bottom-6 -left-6 p-4 bg-emerald-600 rounded-2xl shadow-2xl"
+                >
+                  <Sparkles size={32} className="text-white" />
+                </motion.div>
+              </div>
             </motion.div>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            >
-              <Link
-                href="/auth"
-                className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-blue-600/50"
-              >
-                <span>Commencer maintenant</span>
-                <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
-              </Link>
-              <Link
-                href="/dashboard"
-                className="px-8 py-4 bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white rounded-full font-semibold text-lg transition-all duration-200 border border-[#2a2a2a] hover:border-blue-500/50"
-              >
-                Explorer les modules
-              </Link>
-            </motion.div>
           </div>
         </div>
       </section>
