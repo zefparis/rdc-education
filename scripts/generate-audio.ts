@@ -3,6 +3,7 @@
  * Utilise OpenAI TTS pour créer les voix-off en français
  */
 
+import dotenv from 'dotenv';
 import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
@@ -10,6 +11,9 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Charger les variables d'environnement depuis .env.local
+dotenv.config({ path: '.env.local' });
 
 // Configuration
 const openai = new OpenAI({
