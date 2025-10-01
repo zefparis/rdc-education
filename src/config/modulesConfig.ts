@@ -212,11 +212,13 @@ export function getAllModuleSlugs(): string[] {
 
 /**
  * Génère l'URL Google Colab pour un notebook
+ * @param notebookPath - Le chemin du notebook depuis /modules/ (ex: '/modules/data-science/module_data-science.ipynb')
  */
 export function getColabUrl(notebookPath: string): string {
   const baseUrl = 'https://colab.research.google.com/github';
-  const repo = 'ia-solution-rdc/platform';
+  const repo = 'zefparis/rdc-education';
   const branch = 'main';
+  // Convertir /modules/... en public/modules/...
   const path = notebookPath.replace('/modules/', 'public/modules/');
   
   return `${baseUrl}/${repo}/blob/${branch}/${path}`;

@@ -17,7 +17,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import AudioPlayer from "@/components/AudioPlayer";
-import { modulesConfig } from "@/config/modulesConfig";
+import { modulesConfig, getColabUrl } from "@/config/modulesConfig";
 
 interface ModulePageProps {
   params: Promise<{
@@ -296,39 +296,68 @@ export default function ModulePage({ params }: ModulePageProps) {
             </button>
           )}
 
-          {/* Bouton Notebook */}
-          {courseModule.notebook ? (
-            <a
-              href={courseModule.notebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
-              aria-label="Ouvrir le notebook Jupyter"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <BookOpen size={32} />
-                <ArrowLeft className="rotate-180" size={24} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Notebook Jupyter</h3>
-              <p className="text-purple-100 text-sm">
-                Ouvrir dans le navigateur
-              </p>
-            </a>
-          ) : (
-            <button
-              disabled
-              className="relative bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl p-6 cursor-not-allowed opacity-60"
-              title="Bientôt disponible"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <BookOpen size={32} />
-                <ArrowLeft className="rotate-180" size={24} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Notebook Jupyter</h3>
-              <p className="text-gray-300 text-sm">Bientôt disponible</p>
-            </button>
-          )}
+          {/* Bouton Notebook - Placeholder pour maintenir la grille */}
+          <div className="relative bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl p-6 opacity-60">
+            <div className="flex items-center justify-between mb-4">
+              <BookOpen size={32} />
+              <Code size={24} />
+            </div>
+            <h3 className="text-xl font-bold mb-2">Notebook Jupyter</h3>
+            <p className="text-purple-100 text-sm">
+              Voir les options ci-dessous
+            </p>
+          </div>
         </motion.div>
+
+        {/* Section Notebook Jupyter */}
+        {courseModule.notebook && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 md:p-8 mb-8"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <BookOpen className="text-purple-500" size={32} />
+              <h2 className="text-2xl font-bold text-white">
+                Notebook Jupyter Interactif
+              </h2>
+            </div>
+            
+            <p className="text-gray-300 mb-6">
+              Pratiquez avec des exercices Python interactifs. Choisissez votre méthode préférée :
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+              {/* Bouton Télécharger */}
+              <a
+                href={courseModule.notebook}
+                download
+                className="flex-1 px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] flex items-center justify-center gap-2"
+              >
+                <Download size={20} />
+                📥 Télécharger le Notebook
+              </a>
+
+              {/* Bouton Google Colab */}
+              <a
+                href={getColabUrl(courseModule.notebook)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 px-6 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] flex items-center justify-center gap-2"
+              >
+                <Code size={20} />
+                🚀 Ouvrir dans Google Colab
+              </a>
+            </div>
+
+            <p className="text-sm text-gray-400 bg-[#0a0a0a] rounded-lg p-4 border border-[#2a2a2a]">
+              👉 <strong className="text-gray-300">Télécharger :</strong> Pour ouvrir le notebook en local avec Jupyter ou VS Code (nécessite Python installé).
+              <br />
+              👉 <strong className="text-gray-300">Google Colab :</strong> Pour l&apos;exécuter en ligne directement dans votre navigateur, sans installation (recommandé pour les débutants).
+            </p>
+          </motion.div>
+        )}
 
         {/* Objectifs */}
         {courseModule.objectives && courseModule.objectives.length > 0 && (
