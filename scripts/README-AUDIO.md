@@ -78,7 +78,7 @@ public/audio/
 Les audios sont générés avec les paramètres suivants :
 
 - **Modèle** : `tts-1` (rapide, 3x plus rapide que `tts-1-hd`)
-- **Voix** : `alloy` (meilleure prononciation française)
+- **Voix** : `fable` (meilleure prononciation française)
 - **Vitesse** : `1.0` (naturelle)
 - **Format** : MP3
 
@@ -87,7 +87,7 @@ Les audios sont générés avec les paramètres suivants :
 | Paramètre | Valeur | Raison |
 |-----------|--------|--------|
 | Modèle | `tts-1` | 3x plus rapide, qualité suffisante pour voix-off |
-| Voix | `alloy` | Prononciation française claire et naturelle |
+| Voix | `fable` | Prononciation française claire et naturelle |
 | Vitesse | `1.0` | Rythme naturel, ni trop lent ni trop rapide |
 
 ## 🔄 Régénération

@@ -64,7 +64,23 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#0a0a0a] relative">
+      {/* Background Image */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/images/how-it-works-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      />
+      
+      {/* Dark Overlay for readability */}
+      <div className="fixed inset-0 z-0 bg-black/60" />
+
+      <div className="relative z-10">
       {/* Hero Section avec image */}
       <section className="relative overflow-hidden">
         {/* Background Image */}
@@ -172,6 +188,7 @@ export default function DashboardPage() {
             );
           })}
         </div>
+      </div>
       </div>
     </div>
   );

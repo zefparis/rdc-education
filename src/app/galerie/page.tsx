@@ -13,7 +13,23 @@ export default function GaleriePage() {
   const images = getAllImages();
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] py-12">
+    <div className="min-h-screen bg-[#0a0a0a] relative">
+      {/* Background Image */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/images/how-it-works-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      />
+      
+      {/* Dark Overlay for readability */}
+      <div className="fixed inset-0 z-0 bg-black/60" />
+
+      <div className="relative z-10 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -47,6 +63,8 @@ export default function GaleriePage() {
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  priority={index < 4}
+                  loading={index < 4 ? 'eager' : 'lazy'}
                 />
                 {/* Overlay sombre */}
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300" />
@@ -126,6 +144,7 @@ export default function GaleriePage() {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
       </div>
     </div>
   );

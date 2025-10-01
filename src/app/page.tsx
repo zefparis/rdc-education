@@ -31,17 +31,24 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#0a0a0a] relative">
+      {/* Background Image */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/images/how-it-works-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      />
+      
+      {/* Dark Overlay for readability */}
+      <div className="fixed inset-0 z-0 bg-black/60" />
+
       {/* Hero Section - Split Layout */}
-      <section className="relative overflow-hidden min-h-screen flex items-center">
-        {/* Background with Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a]">
-          <div className="absolute inset-0 opacity-20" 
-            style={{
-              backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)'
-            }}
-          />
-        </div>
+      <section className="relative z-10 overflow-hidden min-h-screen flex items-center">
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -181,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gradient-to-b from-transparent to-[#1a1a1a]">
+      <section className="relative z-10 py-20 bg-gradient-to-b from-transparent to-black/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -223,7 +230,7 @@ export default function Home() {
       </section>
 
       {/* Carousel Section */}
-      <section className="py-20 bg-gradient-to-b from-[#0a0a0a] to-transparent">
+      <section className="relative z-10 py-20 bg-gradient-to-b from-black/30 to-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -251,7 +258,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="relative z-10 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

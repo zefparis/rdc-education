@@ -124,9 +124,23 @@ export default function HowItWorksPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#0a0a0a] relative">
+      {/* Background Image */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/images/how-it-works-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      />
+      
+      {/* Dark Overlay for readability */}
+      <div className="fixed inset-0 z-0 bg-black/60" />
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32">
+      <section className="relative z-10 overflow-hidden py-20 md:py-32">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent" />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -160,7 +174,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Étapes d'utilisation - Timeline */}
-      <section className="py-20 bg-gradient-to-b from-transparent to-[#262626]/50">
+      <section className="relative z-10 py-20 bg-gradient-to-b from-transparent to-[#262626]/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -219,7 +233,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Section Google Colab */}
-      <section className="py-20 bg-[#262626]/30">
+      <section className="relative z-10 py-20 bg-[#262626]/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -304,7 +318,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Valeur des formations */}
-      <section className="py-20">
+      <section className="relative z-10 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -405,7 +419,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* CTA Final */}
-      <section className="py-20 bg-gradient-to-b from-transparent to-blue-600/10">
+      <section className="relative z-10 py-20 bg-gradient-to-b from-transparent to-blue-600/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
