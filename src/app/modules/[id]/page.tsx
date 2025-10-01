@@ -40,7 +40,7 @@ export default function ModulePage({ params }: ModulePageProps) {
   // Si le module n'existe pas, afficher un fallback
   if (!courseModule) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -123,7 +123,7 @@ export default function ModulePage({ params }: ModulePageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] py-8 md:py-12">
+    <div className="min-h-screen bg-[#1a1a1a] py-8 md:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <motion.div
@@ -169,7 +169,7 @@ export default function ModulePage({ params }: ModulePageProps) {
           transition={{ delay: 0.2 }}
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-12"
         >
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-blue-500/30 transition-colors">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6 hover:border-blue-500/30 transition-colors">
             <div className="flex items-center gap-3">
               <Clock className="text-blue-500 flex-shrink-0" size={24} />
               <div>
@@ -181,7 +181,7 @@ export default function ModulePage({ params }: ModulePageProps) {
             </div>
           </div>
 
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-emerald-500/30 transition-colors">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6 hover:border-emerald-500/30 transition-colors">
             <div className="flex items-center gap-3">
               <BarChart className="text-emerald-500 flex-shrink-0" size={24} />
               <div>
@@ -191,7 +191,7 @@ export default function ModulePage({ params }: ModulePageProps) {
             </div>
           </div>
 
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-purple-500/30 transition-colors">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6 hover:border-purple-500/30 transition-colors">
             <div className="flex items-center gap-3">
               <CheckCircle
                 className="text-purple-500 flex-shrink-0"
@@ -212,7 +212,7 @@ export default function ModulePage({ params }: ModulePageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6"
+            className="mb-8 bg-[#262626] border border-[#404040] rounded-xl p-6"
           >
             <div className="flex items-center gap-3">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
@@ -316,7 +316,7 @@ export default function ModulePage({ params }: ModulePageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 md:p-8 mb-8"
+            className="bg-[#262626] border border-[#404040] rounded-xl p-6 md:p-8 mb-8"
           >
             <div className="flex items-center gap-3 mb-6">
               <BookOpen className="text-purple-500" size={32} />
@@ -352,7 +352,7 @@ export default function ModulePage({ params }: ModulePageProps) {
               </a>
             </div>
 
-            <p className="text-sm text-gray-400 bg-[#0a0a0a] rounded-lg p-4 border border-[#2a2a2a]">
+            <p className="text-sm text-gray-400 bg-[#1a1a1a] rounded-lg p-4 border border-[#404040]">
               👉 <strong className="text-gray-300">Télécharger :</strong> Pour ouvrir le notebook en local avec Jupyter ou VS Code (nécessite Python installé).
               <br />
               👉 <strong className="text-gray-300">Google Colab :</strong> Pour l&apos;exécuter en ligne directement dans votre navigateur, sans installation (recommandé pour les débutants).
@@ -366,7 +366,7 @@ export default function ModulePage({ params }: ModulePageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 md:p-8 mb-8"
+            className="bg-[#262626] border border-[#404040] rounded-xl p-6 md:p-8 mb-8"
           >
             <h2 className="text-2xl font-bold text-white mb-6">
               Objectifs d&apos;apprentissage
@@ -397,7 +397,7 @@ export default function ModulePage({ params }: ModulePageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 md:p-8 mb-8"
+            className="bg-[#262626] border border-[#404040] rounded-xl p-6 md:p-8 mb-8"
           >
             <h2 className="text-2xl font-bold text-white mb-6">
               Contenu du module
@@ -409,7 +409,7 @@ export default function ModulePage({ params }: ModulePageProps) {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6 + index * 0.03 }}
-                  className="flex items-center gap-4 p-4 bg-[#0a0a0a] rounded-lg border border-[#2a2a2a] hover:border-blue-500/50 transition-colors group"
+                  className="flex items-center gap-4 p-4 bg-[#1a1a1a] rounded-lg border border-[#404040] hover:border-blue-500/50 transition-colors group"
                 >
                   <div className="flex-shrink-0 w-8 h-8 bg-blue-600 group-hover:bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm transition-colors">
                     {index + 1}
@@ -430,7 +430,7 @@ export default function ModulePage({ params }: ModulePageProps) {
           transition={{ delay: 0.6 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12"
         >
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-blue-500/30 transition-colors">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6 hover:border-blue-500/30 transition-colors">
             <FileText size={32} className="text-blue-500 mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">
               Documents PDF
@@ -440,7 +440,7 @@ export default function ModulePage({ params }: ModulePageProps) {
             </p>
           </div>
 
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-emerald-500/30 transition-colors">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6 hover:border-emerald-500/30 transition-colors">
             <VideoIcon size={32} className="text-emerald-500 mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">Vidéos</h3>
             <p className="text-gray-400 text-sm">
@@ -448,7 +448,7 @@ export default function ModulePage({ params }: ModulePageProps) {
             </p>
           </div>
 
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-purple-500/30 transition-colors">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6 hover:border-purple-500/30 transition-colors">
             <Code size={32} className="text-purple-500 mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">Code Source</h3>
             <p className="text-gray-400 text-sm">

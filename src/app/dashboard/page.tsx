@@ -64,7 +64,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Hero Section avec image */}
       <section className="relative overflow-hidden">
         {/* Background Image */}
@@ -78,7 +78,7 @@ export default function DashboardPage() {
               backgroundRepeat: 'no-repeat'
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#0a0a0a]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#1a1a1a]" />
         </div>
         
         {/* Content */}
@@ -112,15 +112,15 @@ export default function DashboardPage() {
           transition={{ delay: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
         >
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6">
             <div className="text-3xl font-bold text-blue-500 mb-2">{modules.length}</div>
             <div className="text-gray-400">Modules disponibles</div>
           </div>
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6">
             <div className="text-3xl font-bold text-emerald-500 mb-2">50+</div>
             <div className="text-gray-400">Heures de contenu</div>
           </div>
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+          <div className="bg-[#262626] border border-[#404040] rounded-xl p-6">
             <div className="text-3xl font-bold text-purple-500 mb-2">1000+</div>
             <div className="text-gray-400">Étudiants actifs</div>
           </div>
@@ -131,7 +131,7 @@ export default function DashboardPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6"
+            className="mb-8 bg-[#262626] border border-[#404040] rounded-xl p-6"
           >
             <div className="flex items-center space-x-3">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>

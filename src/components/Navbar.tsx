@@ -20,7 +20,7 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-md border-b border-[#2a2a2a]">
+    <nav className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-[#404040]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -44,7 +44,7 @@ export default function Navbar() {
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                     isActive(link.href)
                       ? 'bg-blue-600 text-white'
-                      : 'text-gray-300 hover:bg-[#1a1a1a] hover:text-white'
+                      : 'text-gray-300 hover:bg-[#262626] hover:text-white'
                   }`}
                 >
                   <Icon size={18} />
@@ -57,7 +57,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-[#1a1a1a] transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-[#262626] transition-colors"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -72,7 +72,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-[#2a2a2a] bg-[#0a0a0a]"
+            className="md:hidden border-t border-[#404040] bg-[#1a1a1a]"
           >
             <div className="px-4 py-4 space-y-2">
               {navLinks.map((link) => {
@@ -85,7 +85,7 @@ export default function Navbar() {
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                       isActive(link.href)
                         ? 'bg-blue-600 text-white'
-                        : 'text-gray-300 hover:bg-[#1a1a1a] hover:text-white'
+                        : 'text-gray-300 hover:bg-[#262626] hover:text-white'
                     }`}
                   >
                     <Icon size={20} />

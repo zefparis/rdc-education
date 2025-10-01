@@ -31,7 +31,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[90vh] flex items-center">
         {/* Background Image with Overlay */}
@@ -46,7 +46,7 @@ export default function Home() {
               backgroundColor: '#0a0a0a'
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#0a0a0a]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#1a1a1a]" />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
@@ -105,7 +105,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gradient-to-b from-transparent to-[#0a0a0a]">
+      <section className="py-20 bg-gradient-to-b from-transparent to-[#1a1a1a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
