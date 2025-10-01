@@ -17,6 +17,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import AudioPlayer from "@/components/AudioPlayer";
+import JupyterTutorial from "@/components/JupyterTutorial";
 import { modulesConfig, getColabUrl } from "@/config/modulesConfig";
 
 interface ModulePageProps {
@@ -472,6 +473,9 @@ export default function ModulePage({ params }: ModulePageProps) {
           </Link>
         </motion.div>
       </div>
+
+      {/* Tutoriel Jupyter */}
+      {courseModule.notebook && <JupyterTutorial />}
     </div>
   );
 }
