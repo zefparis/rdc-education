@@ -40,27 +40,29 @@ export default function ModulePage({ params }: ModulePageProps) {
   // Si le module n'existe pas, afficher un fallback
   if (!courseModule) {
     return (
-      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center max-w-md"
-        >
-          <div className="text-6xl mb-6">🔍</div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Module introuvable
-          </h1>
-          <p className="text-gray-400 mb-8">
-            Le module que vous recherchez n&apos;existe pas ou a été déplacé.
-          </p>
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+      <div className="relative z-10 py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center max-w-md mx-auto"
           >
-            <ArrowLeft size={20} />
-            Retour au dashboard
-          </Link>
-        </motion.div>
+            <div className="text-6xl mb-6">🔍</div>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Module introuvable
+            </h1>
+            <p className="text-gray-400 mb-8">
+              Le module que vous recherchez n&apos;existe pas ou a été déplacé.
+            </p>
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+            >
+              <ArrowLeft size={20} />
+              Retour au dashboard
+            </Link>
+          </motion.div>
+        </div>
       </div>
     );
   }
@@ -123,7 +125,7 @@ export default function ModulePage({ params }: ModulePageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] py-8 md:py-12">
+    <div className="relative z-10 py-8 md:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <motion.div

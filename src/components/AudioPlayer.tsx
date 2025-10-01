@@ -102,13 +102,13 @@ export default function AudioPlayer({ audioUrl, title }: AudioPlayerProps) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 shadow-lg"
+      className="glass-card p-6 shadow-lg"
     >
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
       {title && (
         <h3 className="text-white font-semibold mb-4 flex items-center space-x-2">
-          <Volume2 size={20} className="text-blue-500" />
+          <Volume2 size={20} className="text-blue-400" />
           <span>{title}</span>
         </h3>
       )}
@@ -119,19 +119,19 @@ export default function AudioPlayer({ audioUrl, title }: AudioPlayerProps) {
           <button
             onClick={togglePlay}
             disabled={isLoading}
-            className="flex-shrink-0 w-12 h-12 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 rounded-full flex items-center justify-center transition-colors"
+            className="flex-shrink-0 w-12 h-12 glass-button bg-blue-600/20 hover:bg-blue-600/30 disabled:bg-gray-600/50 rounded-full flex items-center justify-center transition-all duration-300 group"
           >
             {isLoading ? (
               <Loader2 size={24} className="text-white animate-spin" />
             ) : isPlaying ? (
-              <Pause size={24} className="text-white" />
+              <Pause size={24} className="text-white group-hover:scale-110 transition-transform" />
             ) : (
-              <Play size={24} className="text-white ml-1" />
+              <Play size={24} className="text-white ml-1 group-hover:scale-110 transition-transform" />
             )}
           </button>
 
           <div className="flex-1 space-y-2">
-            {/* Progress Bar */}
+            {/* Progress Bar avec glassmorphism */}
             <input
               type="range"
               min="0"
@@ -139,25 +139,25 @@ export default function AudioPlayer({ audioUrl, title }: AudioPlayerProps) {
               value={currentTime}
               onChange={handleSeek}
               disabled={isLoading}
-              className="w-full h-2 bg-[#2a2a2a] rounded-lg appearance-none cursor-pointer accent-blue-600 disabled:opacity-50"
+              className="w-full h-2 glass-input rounded-lg appearance-none cursor-pointer disabled:opacity-50"
               style={{
-                background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${(currentTime / duration) * 100}%, #2a2a2a ${(currentTime / duration) * 100}%, #2a2a2a 100%)`,
+                background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${(currentTime / duration) * 100}%, rgba(42, 42, 42, 0.5) ${(currentTime / duration) * 100}%, rgba(42, 42, 42, 0.5) 100%)`,
               }}
             />
 
-            {/* Time Display */}
-            <div className="flex justify-between text-sm text-gray-400">
+            {/* Time Display avec glassmorphism */}
+            <div className="flex justify-between text-sm text-white/60">
               <span>{formatTime(currentTime)}</span>
               <span>{formatTime(duration)}</span>
             </div>
           </div>
         </div>
 
-        {/* Volume Control */}
+        {/* Volume Control avec glassmorphism */}
         <div className="flex items-center space-x-3">
           <button
             onClick={toggleMute}
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-white/60 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5"
           >
             {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
           </button>
@@ -169,13 +169,16 @@ export default function AudioPlayer({ audioUrl, title }: AudioPlayerProps) {
             step="0.01"
             value={isMuted ? 0 : volume}
             onChange={handleVolumeChange}
-            className="w-24 h-2 bg-[#2a2a2a] rounded-lg appearance-none cursor-pointer accent-blue-600"
+            className="w-24 h-2 glass-input rounded-lg appearance-none cursor-pointer"
             style={{
-              background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${(isMuted ? 0 : volume) * 100}%, #2a2a2a ${(isMuted ? 0 : volume) * 100}%, #2a2a2a 100%)`,
+              background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${(isMuted ? 0 : volume) * 100}%, rgba(42, 42, 42, 0.5) ${(isMuted ? 0 : volume) * 100}%, rgba(42, 42, 42, 0.5) 100%)`,
             }}
           />
         </div>
       </div>
+
+      {/* Bordure animée */}
+      <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-blue-500/30 transition-all duration-300 pointer-events-none" />
     </motion.div>
   );
 }

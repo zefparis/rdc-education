@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { X, ZoomIn } from 'lucide-react';
+import { X, ZoomIn, Image as ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 import { getAllImages } from '@/lib/images';
 
@@ -13,50 +13,40 @@ export default function GaleriePage() {
   const images = getAllImages();
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] relative">
-      {/* Background Image */}
-      <div 
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundImage: 'url(/images/how-it-works-bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
-        }}
-      />
-      
-      {/* Dark Overlay for readability */}
-      <div className="fixed inset-0 z-0 bg-black/60" />
-
-      <div className="relative z-10 py-12">
+    <div className="relative z-10 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-12"
+          className="text-center mb-12"
         >
+          <div className="inline-flex items-center gap-3 p-3 bg-purple-600/20 rounded-full mb-4">
+            <ImageIcon size={32} className="text-purple-500" />
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Galerie
+            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Galerie IA
+            </span>
           </h1>
-          <p className="text-gray-400 text-lg">
-            Explorez notre collection d&apos;images et ressources visuelles sur l&apos;IA
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Découvrez les créations et projets de notre communauté d&apos;apprenants en intelligence artificielle
           </p>
         </motion.div>
 
-        {/* Images Grid */}
+        {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {images.map((image, index) => (
             <motion.div
-              key={index}
+              key={`${image.theme}-${index}`}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
-              className="group relative bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
+              transition={{ delay: index * 0.1 }}
+              className="group cursor-pointer"
               onClick={() => setSelectedImage(index)}
             >
-              {/* Real Image */}
-              <div className="relative aspect-square overflow-hidden">
+              {/* Image Container */}
+              <div className="relative aspect-square overflow-hidden rounded-xl bg-[#262626] border border-[#404040]">
                 <Image
                   src={image.path}
                   alt={image.name}
@@ -68,7 +58,7 @@ export default function GaleriePage() {
                 />
                 {/* Overlay sombre */}
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300" />
-                
+
                 {/* Hover overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <ZoomIn size={48} className="text-white drop-shadow-lg" />
@@ -144,7 +134,6 @@ export default function GaleriePage() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
       </div>
     </div>
   );

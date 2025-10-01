@@ -31,24 +31,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] relative">
-      {/* Background Image */}
-      <div 
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundImage: 'url(/images/how-it-works-bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
-        }}
-      />
-      
-      {/* Dark Overlay for readability */}
-      <div className="fixed inset-0 z-0 bg-black/60" />
-
+    <div className="relative z-10">
       {/* Hero Section - Split Layout */}
-      <section className="relative z-10 overflow-hidden min-h-screen flex items-center">
+      <section className="relative overflow-hidden min-h-screen flex items-center">
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
