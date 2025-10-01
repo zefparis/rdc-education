@@ -51,12 +51,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="dark">
-      <body className="bg-[#0a0a0a] text-white font-sans antialiased min-h-screen">
-        <ClientProviders>
-          {children}
-        </ClientProviders>
-      </body>
-    </html>
+    <ClientProviders>
+      {children}
+    </ClientProviders>
   );
 }

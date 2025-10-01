@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Geist, Geist_Mono } from 'next/font/google';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
+import Head from 'next/head';
 
 // Chargement dynamique des composants côté client
 const Navbar = dynamic(() => import('@/components/Navbar'), { ssr: false });
@@ -25,36 +27,44 @@ export default function ClientProviders({
   children: React.ReactNode;
 }) {
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Si on est en cours de montage côté client, on attend que le composant soit monté
   if (!mounted) {
     return (
       <html lang="fr" className="dark">
-        <body className="bg-gray-900 min-h-screen" />
+        <body className="bg-[#0a0a0a] text-white font-sans antialiased min-h-screen" />
       </html>
     );
   }
 
   return (
     <html lang="fr" className="dark" data-scroll-behavior="smooth">
-      <head>
-        <style>
-          {`
-            :root {
-              --font-geist-sans: ${geistSans.style.fontFamily};
-              --font-geist-mono: ${geistMono.style.fontFamily};
-            }
-          `}
-        </style>
-      </head>
-      <body className="antialiased bg-gray-900 text-white min-h-screen">
+      <Head>
+        <style jsx global>{`
+          :root {
+            --font-geist-sans: ${geistSans.style.fontFamily};
+            --font-geist-mono: ${geistMono.style.fontFamily};
+          }
+          
+          body {
+            background-color: #0a0a0a;
+            color: white;
+            font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+          }
+        `}</style>
+      </Head>
+      <body className="text-white font-sans antialiased min-h-screen">
         {/* Dark Overlay for readability */}
-        <div className="fixed inset-0 z-0 bg-black/60" />
+        <div className="fixed inset-0 z-0 bg-black/70" />
 
-        <FloatingParticles />
         <Navbar />
         <main className="min-h-screen relative z-10">
           {children}

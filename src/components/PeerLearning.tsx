@@ -6,14 +6,8 @@ import {
   Users,
   MessageCircle,
   ThumbsUp,
-  ThumbsDown,
-  Clock,
-  Award,
-  TrendingUp,
   HelpCircle,
   CheckCircle,
-  AlertCircle,
-  Star,
   Eye,
   Reply
 } from 'lucide-react';
@@ -137,11 +131,11 @@ const sampleQuestions: Question[] = [
 ];
 
 export default function PeerLearning() {
-  const [questions, setQuestions] = useState<Question[]>(sampleQuestions);
+  const [questions] = useState<Question[]>(sampleQuestions);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>(sampleQuestions);
   const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
   const [searchTerm, setSearchTerm] = useState('');
-  const [showNewQuestionForm, setShowNewQuestionForm] = useState(false);
+  const [, setShowNewQuestionForm] = useState(false);
 
   const categories = ['Tous', 'Python', 'Machine Learning', 'Deep Learning', 'IA Générative', 'MLOps', 'Autre'];
 
@@ -389,7 +383,7 @@ export default function PeerLearning() {
               {/* No Answers */}
               {question.answers.length === 0 && (
                 <div className="p-6 bg-[#1a1a1a] text-center">
-                  <AlertCircle size={24} className="text-gray-400 mx-auto mb-2" />
+                  <HelpCircle size={24} className="text-gray-400 mx-auto mb-2" />
                   <p className="text-gray-400 text-sm">Aucune réponse pour le moment</p>
                   <button className="mt-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
                     Être le Premier à Répondre

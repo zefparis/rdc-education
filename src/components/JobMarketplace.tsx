@@ -188,8 +188,8 @@ const sampleCompanies: Company[] = [
 ];
 
 export default function JobMarketplace() {
-  const [jobs, setJobs] = useState<Job[]>(sampleJobs);
-  const [companies, setCompanies] = useState<Company[]>(sampleCompanies);
+  const [jobs] = useState<Job[]>(sampleJobs);
+  const [companies] = useState<Company[]>(sampleCompanies);
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(sampleJobs);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLocation, setSelectedLocation] = useState<string>('Tous');

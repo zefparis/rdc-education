@@ -11,11 +11,29 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        DEFAULT: '10px',
+        md: '12px',
+        lg: '16px',
+        xl: '20px',
+      },
+      boxShadow: {
+        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+        'glass-hover': '0 8px 40px rgba(0, 0, 0, 0.2)',
+      },
+      borderWidth: {
+        '1': '1px',
+      },
       fontFamily: {
         'sans': ['Geist Sans', 'system-ui', 'sans-serif'],
         'mono': ['Geist Mono', 'monospace'],
       },
       colors: {
+        'glass': 'rgba(255, 255, 255, 0.05)',
+        'glass-border': 'rgba(255, 255, 255, 0.1)',
+        'glass-hover': 'rgba(255, 255, 255, 0.08)',
         // Couleurs principales du projet
         primary: {
           blue: '#3b82f6',
