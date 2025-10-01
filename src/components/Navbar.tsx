@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, LayoutDashboard, Image as ImageIcon, LogIn, Menu, X } from 'lucide-react';
+import { Home, LayoutDashboard, Image as ImageIcon, LogIn, Menu, X, HelpCircle } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -12,6 +12,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'Accueil', icon: Home },
+    { href: '/how-it-works', label: 'Comment ça marche ?', icon: HelpCircle },
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/galerie', label: 'Galerie', icon: ImageIcon },
     { href: '/auth', label: 'Connexion', icon: LogIn },
