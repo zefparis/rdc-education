@@ -37,8 +37,14 @@ export default function Home() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/images/education/education_1.jpg)' }}
+            className="absolute inset-0"
+            style={{ 
+              backgroundImage: 'url(/images/education/education_1.jpg)',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: '#0a0a0a'
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-[#0a0a0a]" />
         </div>

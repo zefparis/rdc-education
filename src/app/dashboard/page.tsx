@@ -64,21 +64,46 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-12"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Modules d&apos;apprentissage
-          </h1>
-          <p className="text-gray-400 text-lg">
-            Explorez nos modules d&apos;IA et commencez votre parcours d&apos;apprentissage
-          </p>
-        </motion.div>
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* Hero Section avec image */}
+      <section className="relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 h-[400px]">
+          <div 
+            className="absolute inset-0"
+            style={{ 
+              backgroundImage: 'url(/images/education/education_2.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-[#0a0a0a]" />
+        </div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+              <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                L&apos;IA pour l&apos;Afrique
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-200 mb-2">
+              Modules d&apos;apprentissage adaptés à la RDC
+            </p>
+            <p className="text-gray-300 text-lg">
+              Rejoignez des milliers d&apos;étudiants congolais dans l&apos;aventure de l&apos;intelligence artificielle
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         {/* Stats */}
         <motion.div
