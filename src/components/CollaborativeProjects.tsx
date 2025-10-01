@@ -2,23 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Users,
-  Plus,
-  Search,
-  Star,
-  Calendar,
-  MapPin,
-  Clock,
-  Target,
-  Award,
-  TrendingUp,
-  MessageCircle,
-  Github,
-  ExternalLink,
-  CheckCircle,
-  AlertCircle
-} from 'lucide-react';
+import { Users, Search, MapPin, Plus, Clock } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -113,12 +97,12 @@ const sampleProjects: Project[] = [
 ];
 
 export default function CollaborativeProjects() {
-  const [projects, setProjects] = useState<Project[]>(sampleProjects);
+  const [projects] = useState<Project[]>(sampleProjects);
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(sampleProjects);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('Tous');
-  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [, setShowCreateForm] = useState(false);
 
   const categories = ['Tous', 'Computer Vision', 'NLP', 'Data Science', 'Robotics', 'Healthcare', 'Finance'];
   const difficulties = ['Tous', 'Débutant', 'Intermédiaire', 'Avancé'];

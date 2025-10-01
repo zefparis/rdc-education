@@ -3,22 +3,15 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
+  Briefcase,
   Building2,
   MapPin,
   Clock,
-  DollarSign,
+  Search,
+  CheckCircle,
   Users,
   Star,
-  Briefcase,
-  TrendingUp,
-  Award,
-  ExternalLink,
-  Bookmark,
-  Filter,
-  Search,
-  Plus,
-  CheckCircle,
-  AlertCircle
+  Bookmark
 } from 'lucide-react';
 
 interface Job {

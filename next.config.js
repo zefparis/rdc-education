@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Désactiver le cache de build pour éviter les problèmes de chargement des styles
   experimental: {
-    serverActions: true,
+    serverActions: {},
     optimizePackageImports: ['lucide-react'],
   },
   // Ignorer les fichiers système Windows dans le suivi des fichiers
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     config.watchOptions = {
       ...config.watchOptions,
       ignored: [
