@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "fetch:images": "ts-node scripts/fetch-images.ts",
-    "audit:modules": "ts-node scripts/audit-modules.ts"
+    "audit:modules": "ts-node scripts/audit-modules.ts",
+    "generate:audio": "ts-node scripts/generate-audio.ts"
   },
   "dependencies": {
     "axios": "^1.12.2",

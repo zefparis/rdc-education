@@ -13,13 +13,28 @@ export default function IntroAudioPlayer() {
   const [showPlayer, setShowPlayer] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Vérifier si l'audio existe au chargement
+  // Vérifier si l'audio existe au chargement et le précharger
   useEffect(() => {
     checkAudioAvailability();
   }, []);
 
   const checkAudioAvailability = async () => {
     try {
+      // Vérifier d'abord si le fichier MP3 statique existe
+      const staticAudioPath = '/audio/intro.mp3';
+      const staticCheck = await fetch(staticAudioPath, { method: 'HEAD' });
+      
+      if (staticCheck.ok) {
+        // Utiliser le fichier statique (instantané)
+        setAudioUrl(staticAudioPath);
+        return;
+      }
+    } catch {
+      // Fichier statique non disponible, essayer l'API
+    }
+
+    try {
+      // Sinon, utiliser l'API (génération à la demande)
       const response = await fetch('/api/intro-audio');
       const data = await response.json();
       

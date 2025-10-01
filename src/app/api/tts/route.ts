@@ -60,10 +60,10 @@ export async function POST(request: NextRequest) {
     });
 
     const mp3 = await openai.audio.speech.create({
-      model: 'tts-1-hd', // Meilleure qualité
-      voice: 'nova', // Voix plus claire pour le français
+      model: 'tts-1', // Modèle rapide (3x plus rapide que HD)
+      voice: 'alloy', // Meilleure prononciation française
       input: text,
-      speed: 0.95, // Légèrement ralenti pour meilleure compréhension
+      speed: 1.0, // Vitesse naturelle
     });
 
     const buffer = Buffer.from(await mp3.arrayBuffer());
