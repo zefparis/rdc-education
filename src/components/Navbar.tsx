@@ -27,7 +27,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2 group">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent"
+              className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent"
             >
               Ia-Solution RDC
             </motion.div>
