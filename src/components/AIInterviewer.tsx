@@ -5,17 +5,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mic,
   MicOff,
-  Volume2,
-  VolumeX,
-  RotateCcw,
   CheckCircle,
   XCircle,
   Brain,
   MessageSquare,
   Clock,
   Award,
-  Target,
-  TrendingUp
+  Target
 } from 'lucide-react';
 
 interface InterviewQuestion {
@@ -79,13 +75,13 @@ export default function AIInterviewer() {
   const [score, setScore] = useState(0);
   const [questionCount, setQuestionCount] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const recognitionRef = useRef<any>(null);
+  const [isMuted] = useState(false);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
     // Initialize speech recognition
     if (typeof window !== 'undefined') {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
       if (SpeechRecognition) {
         recognitionRef.current = new SpeechRecognition();
@@ -93,7 +89,7 @@ export default function AIInterviewer() {
         recognitionRef.current.interimResults = false;
         recognitionRef.current.lang = 'fr-FR';
 
-        recognitionRef.current.onresult = (event: any) => {
+        recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
           const transcript = event.results[0][0].transcript;
           setUserAnswer(transcript);
           setIsListening(false);

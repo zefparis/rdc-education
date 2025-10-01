@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Brain, Sparkles, Users, BookOpen, Rocket, Volume2 } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, Brain, Sparkles, Users, BookOpen, Rocket } from 'lucide-react';
 import ImageCarousel from '@/components/ImageCarousel';
 import IntroAudioPlayer from '@/components/IntroAudioPlayer';
 
@@ -137,9 +138,11 @@ export default function Home() {
                 
                 {/* Image */}
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-blue-500/20">
-                  <img
+                  <Image
                     src="/images/education/education_1.jpg"
                     alt="IA Education en RDC"
+                    width={800}
+                    height={450}
                     className="w-full h-auto object-cover"
                     style={{
                       boxShadow: '0 0 60px rgba(59, 130, 246, 0.3)'

@@ -6,7 +6,6 @@ import {
   Users,
   Plus,
   Search,
-  Filter,
   Star,
   Calendar,
   MapPin,
