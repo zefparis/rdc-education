@@ -20,6 +20,7 @@ import { Exercise } from './src/config/enhancedCourseConfig';
 // Version incorrecte (manque title)
 const incorrectExercise: Exercise = {
   id: 'ex-perceptron-logic',
+  title: 'Perceptron pour fonction logique',
   description: 'Implémentez un perceptron pour apprendre la fonction logique AND.',
   difficulty: 'moyen',
   solution: '...' // Erreur TypeScript: Property 'title' is missing
