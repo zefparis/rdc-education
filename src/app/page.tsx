@@ -49,10 +49,9 @@ export default function Home() {
               {/* Title with Glow Effect */}
               <div>
                 <h1 
-                  className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6"
+                  className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent"
                   style={{
-                    color: '#60a5fa',
-                    textShadow: '0 0 40px rgba(96, 165, 250, 0.5), 0 0 80px rgba(96, 165, 250, 0.3)'
+                    textShadow: '0 0 20px rgba(251, 146, 60, 0.3)'
                   }}
                 >
                   Ia-Solution RDC

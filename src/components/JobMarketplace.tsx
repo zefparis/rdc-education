@@ -299,37 +299,64 @@ export default function JobMarketplace() {
           </div>
 
           {/* Location Filter */}
-          <select
-            value={selectedLocation}
-            onChange={(e) => setSelectedLocation(e.target.value)}
-            className="px-4 py-3 bg-[#1a1a1a] border border-[#404040] rounded-lg text-white focus:outline-none focus:border-orange-500"
-          >
-            {locations.map(location => (
-              <option key={location} value={location}>{location}</option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              value={selectedLocation}
+              onChange={(e) => setSelectedLocation(e.target.value)}
+              className="px-4 py-3 pr-10 appearance-none bg-[#2a1a0f]/60 backdrop-blur-sm border border-orange-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-transparent transition-all duration-200 cursor-pointer shadow-[0_4px_15px_rgba(251,146,60,0.1)] hover:bg-[#2a1a0f]/80"
+            >
+              {locations.map(location => (
+                <option key={location} value={location} className="bg-[#2a1a0f] text-white">
+                  {location}
+                </option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg className="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
 
           {/* Type Filter */}
-          <select
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            className="px-4 py-3 bg-[#1a1a1a] border border-[#404040] rounded-lg text-white focus:outline-none focus:border-orange-500"
-          >
-            {types.map(type => (
-              <option key={type} value={type}>{type}</option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="px-4 py-3 pr-10 appearance-none bg-[#2a1a0f]/60 backdrop-blur-sm border border-orange-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-transparent transition-all duration-200 cursor-pointer shadow-[0_4px_15px_rgba(251,146,60,0.1)] hover:bg-[#2a1a0f]/80"
+            >
+              {types.map(type => (
+                <option key={type} value={type} className="bg-[#2a1a0f] text-white">
+                  {type}
+                </option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg className="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
 
           {/* Level Filter */}
-          <select
-            value={selectedLevel}
-            onChange={(e) => setSelectedLevel(e.target.value)}
-            className="px-4 py-3 bg-[#1a1a1a] border border-[#404040] rounded-lg text-white focus:outline-none focus:border-orange-500"
-          >
-            {levels.map(level => (
-              <option key={level} value={level}>{level}</option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              value={selectedLevel}
+              onChange={(e) => setSelectedLevel(e.target.value)}
+              className="px-4 py-3 pr-10 appearance-none bg-[#2a1a0f]/60 backdrop-blur-sm border border-orange-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-transparent transition-all duration-200 cursor-pointer shadow-[0_4px_15px_rgba(251,146,60,0.1)] hover:bg-[#2a1a0f]/80"
+            >
+              {levels.map(level => (
+                <option key={level} value={level} className="bg-[#2a1a0f] text-white">
+                  {level}
+                </option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg className="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
       </motion.div>
 

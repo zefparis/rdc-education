@@ -57,7 +57,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2 group">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold text-blue-400 drop-shadow-lg"
+              className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-lg"
             >
               Ia-Solution RDC
             </motion.div>
@@ -71,8 +71,8 @@ export default function Navbar() {
                   onClick={() => handleDropdown(section.title)}
                   className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 glass-button ${
                     section.items.some(item => isActive(item.href))
-                      ? 'bg-blue-600/20 text-white border border-blue-500/30'
-                      : 'text-gray-300 hover:text-white hover:bg-white/5'
+                      ? 'bg-orange-600/20 text-white border border-orange-500/30'
+                      : 'text-gray-300 hover:text-white hover:bg-white/5 hover:bg-orange-500/10'
                   }`}
                 >
                   <span className="font-medium">{section.title}</span>
@@ -89,20 +89,40 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-56 glass-card rounded-lg shadow-glass dropdown-menu border border-blue-500/20"
+                      className="absolute top-full left-0 mt-2 w-56 rounded-xl overflow-hidden"
+                      style={{
+                        background: 'rgba(30, 30, 30, 0.6)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
+                        border: '1px solid rgba(255, 165, 0, 0.4)',
+                        boxShadow: '0 0 10px rgba(255, 165, 0, 0.3), 0 0 20px rgba(255, 165, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}
                     >
-                      <div className="py-2">
+                      <div className="relative py-1">
+                        {/* Effet de lueur intérieure */}
+                        <div 
+                          className="absolute inset-0 pointer-events-none"
+                          style={{
+                            boxShadow: 'inset 0 0 20px rgba(255, 165, 0, 0.1)',
+                            borderRadius: '0.75rem'
+                          }}
+                        />
                         {section.items.map((item) => {
                           const Icon = item.icon;
                           return (
                             <Link
+                              style={{
+                                textShadow: isActive(item.href) ? '0 0 8px rgba(255, 255, 255, 0.5)' : 'none'
+                              }}
                               key={item.href}
                               href={item.href}
                               onClick={() => setActiveDropdown(null)}
-                              className={`flex items-center space-x-3 px-4 py-3 text-sm transition-colors hover:bg-white/5 ${
+                              className={`flex items-center space-x-3 px-4 py-3 text-sm transition-all duration-200 relative group ${
                                 isActive(item.href)
-                                  ? 'bg-blue-600/20 text-white'
-                                  : 'text-gray-300 hover:text-white'
+                                  ? 'bg-gradient-to-r from-orange-600/40 to-orange-700/50 text-white font-medium'
+                                  : 'text-gray-200 hover:bg-white/5 hover:text-white hover:bg-gradient-to-r hover:from-orange-500/10 hover:to-orange-600/10'
                               }`}
                             >
                               <Icon size={18} />
@@ -122,8 +142,8 @@ export default function Navbar() {
               href="/auth"
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 glass-button ${
                 isActive('/auth')
-                  ? 'bg-emerald-600/20 text-white border border-emerald-500/30'
-                  : 'text-gray-300 hover:text-white hover:bg-white/5'
+                  ? 'bg-orange-600/20 text-white border border-orange-500/30'
+                  : 'text-gray-300 hover:text-white hover:bg-orange-500/10'
               }`}
             >
               <LogIn size={18} />
@@ -149,9 +169,9 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-card border-t border-blue-500/20"
+            className="md:hidden glass-card border-t border-orange-500/20"
           >
-            <div className="px-4 py-4 space-y-2">
+            <div className="p-2">
               {navSections.map((section) => (
                 <div key={section.title} className="mb-4">
                   <div className="text-gray-400 text-sm font-medium mb-2 px-3">
@@ -164,10 +184,10 @@ export default function Navbar() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-200 hover:bg-white/5 ${
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                           isActive(item.href)
-                            ? 'bg-blue-600/20 text-white'
-                            : 'text-gray-300 hover:text-white'
+                            ? 'bg-gradient-to-r from-orange-500/30 to-orange-600/40 text-white font-medium'
+                            : 'text-gray-200 hover:bg-white/10 hover:text-white'
                         }`}
                       >
                         <Icon size={20} />
@@ -178,14 +198,14 @@ export default function Navbar() {
                 </div>
               ))}
 
-              <div className="pt-2 border-t border-blue-500/20">
+              <div className="pt-2 border-t border-orange-500/20">
                 <Link
                   href="/auth"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-200 hover:bg-white/5 ${
                     isActive('/auth')
-                      ? 'bg-emerald-600/20 text-white'
-                      : 'text-gray-300 hover:text-white'
+                      ? 'bg-orange-600/20 text-white'
+                      : 'text-gray-300 hover:text-white hover:bg-orange-500/10'
                   }`}
                 >
                   <LogIn size={20} />
