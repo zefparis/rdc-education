@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, ArrowRight, ArrowLeft, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { QuizData, QuizProps } from './types';
+import { QuizProps } from './types';
 
-export { type QuizData, type QuizProps } from './types';
+export { type QuizProps } from './types';
 
 export function Quiz({ quizData, onComplete, showResults = true }: QuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

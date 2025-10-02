@@ -1,19 +1,21 @@
-// Test de l'interface Exercise
 import { Exercise } from './src/config/enhancedCourseConfig';
 
-// Exercice avec propriÃ©tÃ© title manquante (erreur)
+// Exercice avec propriété title manquante (erreur)
 const badExercise: Exercise = {
   id: 'ex-perceptron-logic',
-  description: 'ImplÃ©mentez un perceptron pour apprendre la fonction logique AND.',
-  difficulty: 'moyen',
-  solution: '...' // title manquant !
-};
-
-// Exercice correct
-const goodExercise: Exercise = {
-  id: 'ex-perceptron-logic',
-  title: 'ImplÃ©mentez un perceptron pour apprendre la fonction logique AND.',
-  description: 'ImplÃ©mentez un perceptron pour apprendre la fonction logique AND.',
+  title: 'Perceptron pour fonction logique',
+  description: 'Implémentez un perceptron pour apprendre la fonction logique AND.',
   difficulty: 'moyen',
   solution: '...'
 };
+
+// Exercice correct avec toutes les propriétés
+const goodExercise: Exercise = {
+  id: 'ex-perceptron-logic',
+  title: 'Perceptron pour fonction logique',
+  description: 'Implémentez un perceptron pour apprendre la fonction logique AND.',
+  difficulty: 'moyen',
+  solution: '...'
+};
+
+export { badExercise, goodExercise };
