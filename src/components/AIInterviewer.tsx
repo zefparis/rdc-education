@@ -66,22 +66,52 @@ const interviewQuestions: InterviewQuestion[] = [
   }
 ];
 
+interface WindowWithSpeechRecognition extends Window {
+  SpeechRecognition: new () => SpeechRecognition;
+  webkitSpeechRecognition: new () => SpeechRecognition;
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult: (event: SpeechRecognitionEvent) => void;
+  onerror: (event: SpeechRecognitionErrorEvent) => void;
+  start: () => void;
+  stop: () => void;
+}
+
+interface SpeechRecognitionEvent {
+  results: {
+    [index: number]: {
+      [index: number]: {
+        transcript: string;
+      };
+    };
+  };
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string;
+  message: string;
+}
+
 export default function AIInterviewer() {
   const [isInterviewActive, setIsInterviewActive] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState<InterviewQuestion | null>(null);
-  const [userAnswer, setUserAnswer] = useState('');
-  const [isListening, setIsListening] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
-  const [score, setScore] = useState(0);
-  const [questionCount, setQuestionCount] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
-  const [isMuted] = useState(false);
+  const [score, setScore] = useState<number>(0);
+  const [questionCount, setQuestionCount] = useState<number>(0);
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [isListening, setIsListening] = useState<boolean>(false);
+  const [userAnswer, setUserAnswer] = useState<string>('');
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
     // Initialize speech recognition
     if (typeof window !== 'undefined') {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const SpeechRecognition = (window as unknown as WindowWithSpeechRecognition).SpeechRecognition || 
+                             (window as unknown as WindowWithSpeechRecognition).webkitSpeechRecognition;
 
       if (SpeechRecognition) {
         recognitionRef.current = new SpeechRecognition();

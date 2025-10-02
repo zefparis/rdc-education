@@ -44,7 +44,7 @@ export default function ClientProviders({
 
   return (
     <html lang="fr" className="dark" data-scroll-behavior="smooth">
-      <head>
+      <Head>
         <style jsx global>{`
           :root {
             --font-geist-sans: ${geistSans.style.fontFamily};
@@ -60,7 +60,7 @@ export default function ClientProviders({
             min-height: 100vh;
           }
         `}</style>
-      </head>
+      </Head>
       <body className="text-white font-sans antialiased min-h-screen">
         {/* Dark Overlay for readability */}
         <div className="fixed inset-0 z-0 bg-black/70" />

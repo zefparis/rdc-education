@@ -135,12 +135,11 @@ export default function Home() {
               <div className="relative">
                 {/* Glow Effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-emerald-600/20 rounded-2xl blur-3xl"></div>
-                
                 {/* Image */}
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-blue-500/20">
-                  <Image
-                    src="/images/education/education_1.jpg"
-                    alt="IA Education en RDC"
+                  <Image 
+                    src="/images/education/education_1.jpg" 
+                    alt="IA Education en RDC" 
                     width={800}
                     height={450}
                     className="w-full h-auto object-cover"
