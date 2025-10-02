@@ -1,0 +1,136 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Brain, Cpu, Database, Award, Clock, BarChart2 } from 'lucide-react';
+
+const quizModules = [
+  {
+    id: 'data-science',
+    title: 'Data Science',
+    description: 'Testez vos connaissances en analyse de données et statistiques',
+    icon: <Database className="w-6 h-6" />,
+    color: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
+    questions: 12,
+    time: 15,
+    difficulty: 'Intermédiaire'
+  },
+  {
+    id: 'machine-learning',
+    title: 'Machine Learning',
+    description: 'Évaluez votre maîtrise des algorithmes de ML',
+    icon: <Brain className="w-6 h-6" />,
+    color: 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400',
+    questions: 10,
+    time: 12,
+    difficulty: 'Avancé'
+  },
+  {
+    id: 'deep-learning',
+    title: 'Deep Learning',
+    description: 'Quiz sur les réseaux de neurones et le deep learning',
+    icon: <Cpu className="w-6 h-6" />,
+    color: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400',
+    questions: 8,
+    time: 10,
+    difficulty: 'Expert'
+  }
+];
+
+export default function QuizHome() {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Quiz d'Évaluation
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Testez vos connaissances dans différents domaines de l'IA et de la Data Science
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {quizModules.map((module, index) => (
+            <motion.div
+              key={module.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="h-full"
+            >
+              <Link href={`/quiz/${module.id}`} className="block h-full group">
+                <Card className="h-full hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary/20 dark:hover:border-primary/30">
+                  <CardHeader>
+                    <div className={`w-14 h-14 rounded-2xl ${module.color} flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
+                      {module.icon}
+                    </div>
+                    <CardTitle className="text-2xl flex items-center justify-between">
+                      {module.title}
+                      <span className="text-xs px-2 py-1 rounded-full bg-accent text-accent-foreground ml-2">
+                        {module.difficulty}
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">{module.description}</p>
+                    <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1 px-2 py-1 bg-accent rounded-full">
+                        <BarChart2 className="w-3 h-3" />
+                        {module.questions} questions
+                      </div>
+                      <div className="flex items-center gap-1 px-2 py-1 bg-accent rounded-full">
+                        <Clock className="w-3 h-3" />
+                        {module.time} min
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="pt-0">
+                    <div className="w-full text-center text-sm font-medium text-primary group-hover:translate-x-1 transition-transform">
+                      Commencer le quiz →
+                    </div>
+                  </CardFooter>
+                </Card>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-16 bg-white dark:bg-gray-800 rounded-xl p-6 border border-border shadow-sm"
+        >
+          <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            <Award className="w-6 h-6 text-yellow-500" />
+            Conseils pour réussir
+          </h2>
+          <ul className="space-y-3 text-muted-foreground">
+            <li className="flex items-start gap-3">
+              <span className="text-primary font-medium">•</span>
+              <span>Lisez attentivement chaque question avant de répondre</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-primary font-medium">•</span>
+              <span>Prenez le temps de comprendre les explications, même pour les bonnes réponses</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-primary font-medium">•</span>
+              <span>N'hésitez pas à revenir en arrière pour revoir les concepts difficiles</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-primary font-medium">•</span>
+              <span>Un score de 80% ou plus est considéré comme une bonne maîtrise</span>
+            </li>
+          </ul>
+        </motion.div>
+      </div>
+    </div>
+  );
+}

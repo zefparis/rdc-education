@@ -1,0 +1,15 @@
+{
+  "name": "ia-solution-rdc-scripts",
+  "version": "1.0.0",
+  "description": "Scripts pour la gestion des modules de cours",
+  "main": "completeModules.ts",
+  "scripts": {
+    "complete-modules": "ts-node completeModules.ts",
+    "check-modules": "ts-node checkModules.ts"
+  },
+  "dependencies": {
+    "typescript": "^4.9.5",
+    "ts-node": "^10.9.1",
+    "@types/node": "^18.15.11"
+  }
+}

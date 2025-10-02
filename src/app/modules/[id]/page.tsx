@@ -15,6 +15,9 @@ import {
   Code,
   ArrowLeft,
   BookOpen,
+  X,
+  Copy,
+  Check
 } from "lucide-react";
 import AudioPlayer from "@/components/AudioPlayer";
 import JupyterTutorial from "@/components/JupyterTutorial";
@@ -33,9 +36,138 @@ export default function ModulePage({ params }: ModulePageProps) {
   // Récupérer le module depuis la configuration
   const courseModule = modulesConfig.find((m) => m.slug === id);
 
-  // États pour l'audio
+  // États
   const [isGenerating, setIsGenerating] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [showCodeExamples, setShowCodeExamples] = useState(false);
+  const [codeCopied, setCodeCopied] = useState(false);
+  
+  // Fonction pour obtenir des exemples de code basés sur le module
+  const getCodeExamples = () => {
+    if (!courseModule) return "// Chargement des exemples de code...";
+    
+    const examples: Record<string, string> = {
+      'data-science': `# Exemple de code Python avec Pandas\nimport pandas as pd\nimport numpy as np\n\n# Créer un DataFrame\ndata = {'Nom': ['Alice', 'Bob', 'Charlie'],\n        'Âge': [25, 30, 35],\n        'Ville': ['Paris', 'Lyon', 'Marseille']}\n\ndf = pd.DataFrame(data)\nprint(df.head())`,
+      'machine-learning': `# Exemple de modèle de Machine Learning\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\n\n# Diviser les données\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\n\n# Entraîner le modèle\nmodel = RandomForestClassifier()\nmodel.fit(X_train, y_train)\n\n# Évaluer le modèle\naccuracy = model.score(X_test, y_test)\nprint(f\"Précision: {accuracy:.2f}\")`,
+      'deep-learning': `# Exemple de réseau de neurones avec TensorFlow\nimport tensorflow as tf\n\n# Créer un modèle séquentiel\nmodel = tf.keras.Sequential([\n    tf.keras.layers.Dense(128, activation='relu', input_shape=(784,)),\n    tf.keras.layers.Dropout(0.2),\n    tf.keras.layers.Dense(10, activation='softmax')\n])\n\n# Compiler le modèle\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])`
+    };
+    
+    return examples[courseModule.slug] || "// Aucun exemple de code disponible pour ce module";
+  };
+
+  // Fonction pour générer le PDF du cours
+  const generatePdf = async () => {
+    if (!courseModule) return;
+    
+    setIsGeneratingPdf(true);
+    
+    try {
+      // Importer dynamiquement jsPDF et html2canvas uniquement côté client
+      const { jsPDF } = await import('jspdf');
+      const html2canvas = (await import('html2canvas')).default;
+      
+      // Créer un élément temporaire pour le contenu du PDF
+      const content = document.createElement('div');
+      content.style.padding = '20px';
+      content.style.fontFamily = 'Arial, sans-serif';
+      content.style.maxWidth = '800px';
+      content.style.margin = '0 auto';
+      content.style.color = '#2d3748';
+      
+      // Ajouter le contenu au PDF
+      content.innerHTML = `
+        <!-- En-tête -->
+        <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px;">
+          <h1 style="color: #2d3748; margin-bottom: 10px; font-size: 24px;">${courseModule.title}</h1>
+          <p style="color: #4a5568; font-style: italic; font-size: 16px;">${courseModule.description}</p>
+          <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px; color: #718096; font-size: 14px;">
+            <span>Niveau: ${courseModule.level}</span>
+            <span>•</span>
+            <span>Durée: ${courseModule.duration}</span>
+          </div>
+        </div>
+        
+        <!-- Objectifs d'apprentissage -->
+        <div style="margin-bottom: 30px;">
+          <h2 style="color: #2d3748; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 15px; font-size: 20px;">Objectifs d'apprentissage</h2>
+          <ul style="padding-left: 20px; color: #4a5568; font-size: 14px; line-height: 1.6;">
+            ${courseModule.objectives?.map(obj => `<li style="margin-bottom: 8px;">${obj}</li>`).join('')}
+          </ul>
+        </div>
+        
+        <!-- Contenu du cours -->
+        <div style="margin-bottom: 30px;">
+          <h2 style="color: #2d3748; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 15px; font-size: 20px;">Contenu du cours</h2>
+          <div style="color: #4a5568; line-height: 1.6; font-size: 14px;">
+            ${courseModule.topics?.map((topic, index) => 
+              `<div style="margin-bottom: 20px;" key="${index}">
+                <h3 style="color: #2d3748; margin-bottom: 10px; font-size: 16px;">${topic}</h3>
+                <p>Contenu détaillé pour ${topic}...</p>
+              </div>`
+            ).join('')}
+          </div>
+        </div>
+        
+        <!-- Exemples de code -->
+        <div>
+          <h2 style="color: #2d3748; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 15px; font-size: 20px;">Exemples de code</h2>
+          <pre style="background-color: #f7fafc; padding: 15px; border-radius: 6px; overflow-x: auto; color: #2d3748; font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap;">
+            <code>${getCodeExamples()}</code>
+          </pre>
+        </div>
+        
+        <!-- Pied de page -->
+        <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #718096; font-size: 12px; text-align: center;">
+          <p>Formation ${courseModule.title} - Ia-Solution RDC</p>
+          <p>${new Date().getFullYear()} - Tous droits réservés</p>
+        </div>
+      `;
+      
+      // Créer un conteneur temporaire pour le contenu du PDF
+      const container = document.createElement('div');
+      container.style.position = 'absolute';
+      container.style.left = '-9999px';
+      container.appendChild(content);
+      document.body.appendChild(container);
+      
+      try {
+        // Générer le canvas avec html2canvas
+        const canvas = await html2canvas(content, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff'
+        });
+        
+        // Créer le PDF
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        
+        // Télécharger le PDF
+        pdf.save(`cours-${courseModule.slug}.pdf`);
+        
+      } catch (error) {
+        console.error("Erreur lors de la génération du PDF:", error);
+        alert("Une erreur est survenue lors de la génération du PDF.");
+      } finally {
+        // Nettoyer
+        if (document.body.contains(container)) {
+          document.body.removeChild(container);
+        }
+        setIsGeneratingPdf(false);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la génération du PDF:", error);
+      alert("Une erreur est survenue lors de la génération du PDF.");
+      setIsGeneratingPdf(false);
+    }
+  };
 
   // Si le module n'existe pas, afficher un fallback
   if (!courseModule) {
@@ -164,11 +296,133 @@ export default function ModulePage({ params }: ModulePageProps) {
           </div>
         </motion.div>
 
-        {/* Stats Cards */}
+        {/* Boutons Audio, PDF et Code */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12"
+        >
+          {/* Bouton Audio */}
+          <button
+            onClick={handleListen}
+            disabled={isGenerating || !!audioUrl}
+            className="group relative bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 disabled:from-gray-600 disabled:to-gray-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
+            aria-label="Écouter le module"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Volume2 size={32} />
+                <div className="text-left">
+                  <h3 className="text-xl font-bold">Voix-off</h3>
+                  <p className="text-orange-100 text-sm">
+                    {isGenerating
+                      ? "Génération..."
+                      : audioUrl
+                      ? "Audio prêt"
+                      : "Écouter l'introduction"}
+                  </p>
+                </div>
+              </div>
+              {!isGenerating && !audioUrl && (
+                <Volume2 size={24} className="opacity-50" />
+              )}
+              {isGenerating && (
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+              )}
+            </div>
+          </button>
+
+          {/* Bouton PDF */}
+          <button
+            onClick={generatePdf}
+            disabled={isGeneratingPdf}
+            className="group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] disabled:opacity-75 disabled:cursor-not-allowed"
+            aria-label="Télécharger le PDF du cours"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <FileText size={32} />
+                <div className="text-left">
+                  <h3 className="text-xl font-bold">Support PDF</h3>
+                  <p className="text-blue-100 text-sm">
+                    {isGeneratingPdf ? 'Génération...' : 'Télécharger le cours'}
+                  </p>
+                </div>
+              </div>
+              {isGeneratingPdf ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+              ) : (
+                <Download size={24} className="opacity-50" />
+              )}
+            </div>
+          </button>
+
+          {/* Bouton Code */}
+          <button
+            onClick={() => setShowCodeExamples(!showCodeExamples)}
+            className="group relative bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
+            aria-label="Afficher les exemples de code"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Code size={32} />
+                <div className="text-left">
+                  <h3 className="text-xl font-bold">Code source</h3>
+                  <p className="text-purple-100 text-sm">
+                    {showCodeExamples ? 'Masquer le code' : 'Afficher les exemples'}
+                  </p>
+                </div>
+              </div>
+              <Code size={24} className="opacity-50" />
+            </div>
+          </button>
+        </motion.div>
+
+        {/* Section Code Examples */}
+        {showCodeExamples && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden mb-12"
+          >
+            <div className="bg-[#1e1e1e] rounded-xl border border-[#404040] overflow-hidden">
+              <div className="flex justify-between items-center px-6 py-4 border-b border-[#404040] bg-[#252526]">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                </div>
+                <span className="text-sm text-gray-400">exemple.py</span>
+                <button 
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(getCodeExamples());
+                      setCodeCopied(true);
+                      setTimeout(() => setCodeCopied(false), 2000);
+                    } catch (err) {
+                      console.error('Failed to copy:', err);
+                    }
+                  }}
+                  className="text-gray-400 hover:text-white p-1 rounded-md hover:bg-[#2d2d2d] transition-colors"
+                  aria-label="Copier le code"
+                >
+                  {codeCopied ? <Check size={18} className="text-green-400" /> : <Copy size={18} />}
+                </button>
+              </div>
+              <pre className="p-6 overflow-x-auto text-sm text-gray-200 font-mono">
+                <code>{getCodeExamples()}</code>
+              </pre>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Stats Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-12"
         >
           <div className="bg-[#262626] border border-[#404040] rounded-xl p-6 hover:border-blue-500/30 transition-colors">
@@ -239,78 +493,6 @@ export default function ModulePage({ params }: ModulePageProps) {
           </motion.div>
         )}
 
-        {/* Action Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12"
-        >
-          {/* Bouton Audio */}
-          <button
-            onClick={handleListen}
-            disabled={isGenerating || !!audioUrl}
-            className="group relative bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 disabled:from-gray-600 disabled:to-gray-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
-            aria-label="Écouter le module"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <Volume2 size={32} />
-              <Volume2 size={24} className="opacity-50" />
-            </div>
-            <h3 className="text-xl font-bold mb-2">Voix-off</h3>
-            <p className="text-orange-100 text-sm">
-              {isGenerating
-                ? "Génération..."
-                : audioUrl
-                ? "Audio prêt"
-                : "Écouter l&apos;introduction"}
-            </p>
-          </button>
-
-          {/* Bouton PDF */}
-          {courseModule.pdf ? (
-            <a
-              href={courseModule.pdf}
-              download
-              className="group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
-              aria-label="Télécharger le support PDF"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <FileText size={32} />
-                <Download size={24} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Support PDF</h3>
-              <p className="text-blue-100 text-sm">
-                Télécharger le cours complet
-              </p>
-            </a>
-          ) : (
-            <button
-              disabled
-              className="relative bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl p-6 cursor-not-allowed opacity-60"
-              title="Bientôt disponible"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <FileText size={32} />
-                <Download size={24} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Support PDF</h3>
-              <p className="text-gray-300 text-sm">Bientôt disponible</p>
-            </button>
-          )}
-
-          {/* Bouton Notebook - Placeholder pour maintenir la grille */}
-          <div className="relative bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl p-6 opacity-60">
-            <div className="flex items-center justify-between mb-4">
-              <BookOpen size={32} />
-              <Code size={24} />
-            </div>
-            <h3 className="text-xl font-bold mb-2">Notebook Jupyter</h3>
-            <p className="text-purple-100 text-sm">
-              Voir les options ci-dessous
-            </p>
-          </div>
-        </motion.div>
 
         {/* Section Notebook Jupyter */}
         {courseModule.notebook && (

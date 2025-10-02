@@ -24,6 +24,7 @@ export default function Navbar() {
       items: [
         { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { href: '/modules/data-science', label: 'Modules', icon: BookOpen },
+        { href: '/quiz', label: 'Quiz', icon: HelpCircle },
       ]
     },
     {
@@ -57,7 +58,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2 group">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-lg"
+              className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-purple-500 bg-clip-text text-transparent drop-shadow-lg"
             >
               Ia-Solution RDC
             </motion.div>
