@@ -2,17 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Mic,
-  MicOff,
-  CheckCircle,
-  XCircle,
-  Brain,
-  MessageSquare,
-  Clock,
-  Award,
-  Target
-} from 'lucide-react';
+import { Mic, MicOff, Brain, MessageSquare, CheckCircle, Clock, Target, Award } from 'lucide-react';
 
 interface InterviewQuestion {
   id: string;
@@ -98,13 +88,13 @@ interface SpeechRecognitionErrorEvent extends Event {
 
 export default function AIInterviewer() {
   const [isInterviewActive, setIsInterviewActive] = useState(false);
-  const [currentQuestion, setCurrentQuestion] = useState<InterviewQuestion | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  const [userAnswer, setUserAnswer] = useState('');
   const [feedback, setFeedback] = useState<string | null>(null);
-  const [score, setScore] = useState<number>(0);
-  const [questionCount, setQuestionCount] = useState<number>(0);
-  const [isComplete, setIsComplete] = useState<boolean>(false);
-  const [isListening, setIsListening] = useState<boolean>(false);
-  const [userAnswer, setUserAnswer] = useState<string>('');
+  const [score, setScore] = useState(0);
+  const [questionCount, setQuestionCount] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState<InterviewQuestion | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {

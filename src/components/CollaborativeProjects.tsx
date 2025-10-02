@@ -96,22 +96,22 @@ const sampleProjects: Project[] = [
   }
 ];
 
-export default function CollaborativeProjects() {
+const categories = ['Tous', 'Computer Vision', 'NLP', 'Data Science', 'Robotics', 'Healthcare', 'Finance'];
+const difficulties = ['Tous', 'Débutant', 'Intermédiaire', 'Avancé'];
+
+const CollaborativeProjects = () => {
   const [projects] = useState<Project[]>(sampleProjects);
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(sampleProjects);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('Tous');
-  const [, setShowCreateForm] = useState(false);
-
-  const categories = ['Tous', 'Computer Vision', 'NLP', 'Data Science', 'Robotics', 'Healthcare', 'Finance'];
-  const difficulties = ['Tous', 'Débutant', 'Intermédiaire', 'Avancé'];
+  const [_showCreateForm, _setShowCreateForm] = useState(false);
 
   useEffect(() => {
-    let filtered = projects;
+    let filtered = [...projects];
 
     if (searchTerm) {
-      filtered = filtered.filter(project =>
+      filtered = filtered.filter((project: Project) =>
         project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         project.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -210,7 +210,7 @@ export default function CollaborativeProjects() {
 
           {/* Create Project Button */}
           <button
-            onClick={() => setShowCreateForm(true)}
+            onClick={() => _setShowCreateForm(true)}
             className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors flex items-center gap-2"
           >
             <Plus size={20} />
@@ -343,4 +343,6 @@ export default function CollaborativeProjects() {
       </motion.div>
     </div>
   );
-}
+};
+
+export default CollaborativeProjects;

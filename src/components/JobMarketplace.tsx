@@ -2,17 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Briefcase,
-  Building2,
-  MapPin,
-  Clock,
-  Search,
-  CheckCircle,
-  Users,
-  Star,
-  Bookmark
-} from 'lucide-react';
+import { Briefcase, Building2, MapPin, Clock, Search, Star, Bookmark, CheckCircle, Users } from 'lucide-react';
 
 interface Job {
   id: string;
@@ -176,7 +166,7 @@ const sampleCompanies: Company[] = [
     openPositions: 3,
     rating: 4.5,
     founded: '2018',
-    website: 'https://minetech.cd'
+    website: 'https://minetech-solutions.cd'
   }
 ];
 
@@ -185,17 +175,18 @@ export default function JobMarketplace() {
   const [companies] = useState<Company[]>(sampleCompanies);
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(sampleJobs);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState<string>('Tous');
+  const [selectedLocation, setSelectedLocation] = useState<string>('Toutes');
+  const [selectedJobType, setSelectedJobType] = useState<string>('Tous');
+  const [selectedExperience, setSelectedExperience] = useState<string>('Tous');
   const [selectedType, setSelectedType] = useState<string>('Tous');
   const [selectedLevel, setSelectedLevel] = useState<string>('Tous');
   const [activeTab, setActiveTab] = useState<'jobs' | 'companies'>('jobs');
 
   const locations = ['Tous', 'Kinshasa', 'Lubumbashi', 'Goma', 'Distant', 'Hybride'];
   const types = ['Tous', 'CDI', 'CDD', 'Stage', 'Freelance'];
-  const levels = ['Tous', 'Junior', 'Mid', 'Senior'];
-
+  const levels = ['Tous', 'Junior', 'Mid', 'senior'];
   useEffect(() => {
-    let filtered = jobs;
+    let filtered = [...jobs];
 
     if (searchTerm) {
       filtered = filtered.filter(job =>
@@ -204,7 +195,7 @@ export default function JobMarketplace() {
         job.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
+    
     if (selectedLocation !== 'Tous') {
       filtered = filtered.filter(job => job.location === selectedLocation);
     }
@@ -219,7 +210,6 @@ export default function JobMarketplace() {
 
     setFilteredJobs(filtered);
   }, [jobs, searchTerm, selectedLocation, selectedType, selectedLevel]);
-
   const formatSalary = (salary: { min: number; max: number; currency: string }) => {
     if (salary.min === salary.max) {
       return `${salary.min} ${salary.currency}`;

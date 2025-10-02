@@ -2,15 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Users,
-  MessageCircle,
-  ThumbsUp,
-  Eye,
-  Reply,
-  CheckCircle,
-  HelpCircle
-} from 'lucide-react';
+import { MessageCircle, ThumbsUp, Eye, Reply, HelpCircle, Users, CheckCircle } from 'lucide-react';
 
 interface Question {
   id: string;
@@ -133,9 +125,10 @@ const sampleQuestions: Question[] = [
 export default function PeerLearning() {
   const [questions] = useState<Question[]>(sampleQuestions);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>(sampleQuestions);
-  const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
   const [searchTerm, setSearchTerm] = useState('');
-  const [, setShowNewQuestionForm] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
+  const [_selectedDifficulty, _setSelectedDifficulty] = useState<string>('Tous');
+  const [_showNewQuestionForm, _setShowNewQuestionForm] = useState(false);
 
   const categories = ['Tous', 'Python', 'Machine Learning', 'Deep Learning', 'IA Générative', 'MLOps', 'Autre'];
 
@@ -260,7 +253,7 @@ export default function PeerLearning() {
 
           {/* New Question Button */}
           <button
-            onClick={() => setShowNewQuestionForm(true)}
+            onClick={() => _setShowNewQuestionForm(true)}
             className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors flex items-center gap-2"
           >
             <HelpCircle size={20} />
@@ -408,7 +401,7 @@ export default function PeerLearning() {
             Soyez le premier à poser une question dans cette catégorie !
           </p>
           <button
-            onClick={() => setShowNewQuestionForm(true)}
+            onClick={() => _setShowNewQuestionForm(true)}
             className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors"
           >
             Poser la Première Question
