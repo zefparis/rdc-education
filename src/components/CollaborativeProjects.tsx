@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Search, MapPin, Plus, Clock } from 'lucide-react';
+import { Users, Search, MapPin, Clock } from 'lucide-react';
 
 interface Project {
   id: string;

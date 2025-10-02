@@ -1,4 +1,4 @@
-  import type { CourseModule, Section, CodeExample, Exercise, FinalProject, Resource } from './types';
+  import type { CourseModule, Section, CodeExample, Exercise, Resource } from './types';
 
   // Définition des types pour les paramètres de la fonction
   interface GeneratePdfParams {

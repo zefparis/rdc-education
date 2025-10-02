@@ -3,12 +3,12 @@
 import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Loader2 } from 'lucide-react';
-import { Question } from '@/components/Quiz';
+import { Question } from '@/components/Quiz/types';
 import { useEffect, useState } from 'react';
 
 // Dynamically import the Quiz component with no SSR
 const Quiz = dynamic(
-  () => import('../../../components/Quiz'),
+  () => import('@/components/Quiz'),
   { 
     loading: () => (
       <div className="flex justify-center items-center min-h-screen">

@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import Head from 'next/head';
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
 import dynamic from 'next/dynamic';
 
 // Configuration des polices
@@ -31,7 +30,6 @@ export default function ClientProviders({
   children: React.ReactNode;
 }) {
   const [mounted, setMounted] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);

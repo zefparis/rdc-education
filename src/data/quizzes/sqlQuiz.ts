@@ -1,4 +1,4 @@
-import { Question } from '../../components/Quiz';
+import { Question } from '@/components/Quiz/types';
 
 export const sqlQuiz: Question[] = [
   {

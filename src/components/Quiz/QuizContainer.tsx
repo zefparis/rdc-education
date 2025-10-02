@@ -1,6 +1,7 @@
 'use client';
 
-import { Quiz } from '@/components/Quiz';
+import { Quiz } from '.';
+import { QuizData } from './types';
 import { dataScienceQuiz } from '@/data/quizzes/dataScienceQuiz';
 import { machineLearningQuiz } from '@/data/quizzes/machineLearningQuiz';
 import { deepLearningQuiz } from '@/data/quizzes/deepLearningQuiz';
@@ -9,10 +10,19 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Home } from 'lucide-react';
 import Link from 'next/link';
 
-const quizData = {
+type QuizModuleData = QuizData & {
+  name: string;
+  icon: string;
+  color: string;
+  bgColor: string;
+  borderColor: string;
+};
+
+const quizData: Record<string, QuizModuleData> = {
   'data-science': {
     questions: dataScienceQuiz,
     name: 'Data Science',
+    title: 'Quiz Data Science',
     description: 'Testez vos connaissances en analyse de données et statistiques',
     icon: '📊',
     color: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
@@ -22,7 +32,8 @@ const quizData = {
   'machine-learning': {
     questions: machineLearningQuiz,
     name: 'Machine Learning',
-    description: 'Évaluez votre maîtrise des algorithmes de ML',
+    title: 'Quiz Machine Learning',
+    description: 'Évaluez votre maîtrise des algorithmes de Machine Learning',
     icon: '🤖',
     color: 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400',
     bgColor: 'bg-purple-50 dark:bg-purple-900/10',
@@ -31,7 +42,8 @@ const quizData = {
   'deep-learning': {
     questions: deepLearningQuiz,
     name: 'Deep Learning',
-    description: 'Quiz sur les réseaux de neurones et le deep learning',
+    title: 'Quiz Deep Learning',
+    description: 'Testez vos connaissances sur les réseaux de neurones profonds',
     icon: '🧠',
     color: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400',
     bgColor: 'bg-green-50 dark:bg-green-900/10',
@@ -96,7 +108,11 @@ export function QuizContainer({ moduleId }: { moduleId: string }) {
       
       <div className={`rounded-xl shadow-sm border p-6 ${bgColor} ${borderColor}`}>
         <Quiz 
-          questions={questions} 
+          quizData={{
+            questions,
+            title: quizData[moduleId as keyof typeof quizData].name,
+            description: quizData[moduleId as keyof typeof quizData].description
+          }}
           onComplete={(score, total) => {
             // Ici, vous pourriez sauvegarder le score
             console.log(`Score: ${score}/${total}`);
