@@ -17,6 +17,8 @@ export type QuizData = {
   questions: Question[];
   title: string;
   description: string;
+  moduleId?: string;
+  icon?: string;
 };
 
 export interface QuizProps {

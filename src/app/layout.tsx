@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Toaster } from '@/components/ui/sonner';
+import { NotificationProvider } from '@/components/ui/Notification';
+import { ProgressProvider } from '@/contexts/ProgressContext';
 import ClientProviders from "@/providers/ClientProviders";
+import Navbar from "@/components/Navbar";
+import { RewardNotification } from "@/components/gamification/RewardNotification";
 
 export const metadata: Metadata = {
   title: "Ia-Solution RDC - Apprendre l'IA en République Démocratique du Congo",
@@ -45,14 +50,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <ClientProviders>
-      {children}
-    </ClientProviders>
+    <html lang="fr" suppressHydrationWarning>
+      <body className="min-h-screen bg-background">
+        <ClientProviders>
+          <ProgressProvider>
+            <>
+              <Navbar />
+              {children}
+              <Toaster position="top-center" />
+              {/* Composant de notification de récompense pour les badges */}
+              <RewardNotification />
+              {/* Fournisseur de notifications générales */}
+              <NotificationProvider />
+            </>
+          </ProgressProvider>
+        </ClientProviders>
+      </body>
+    </html>
   );
 }

@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Home, LayoutDashboard, Image as ImageIcon, LogIn, Menu, X, HelpCircle, Users, Brain, MessageCircle, Briefcase, ChevronDown, BookOpen } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { UserProgressCompact } from './gamification/UserProgressCompact';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -138,6 +139,11 @@ export default function Navbar() {
               </div>
             ))}
 
+            {/* User Gamification Progress - Compact Version */}
+            <div className="hidden md:flex items-center px-3 py-1.5 rounded-lg bg-white/5 border border-orange-500/20">
+              <UserProgressCompact />
+            </div>
+
             {/* Connexion - separate */}
             <Link
               href="/auth"
@@ -173,6 +179,13 @@ export default function Navbar() {
             className="md:hidden glass-card border-t border-orange-500/20"
           >
             <div className="p-2">
+              {/* Compact Gamification header for mobile */}
+              <div className="px-3 py-2 mb-2 flex items-center justify-between rounded-lg bg-white/5 border border-orange-500/20">
+                <div className="text-gray-300 text-sm">Votre progression</div>
+                <div className="scale-90 origin-right">
+                  <UserProgressCompact />
+                </div>
+              </div>
               {navSections.map((section) => (
                 <div key={section.title} className="mb-4">
                   <div className="text-gray-400 text-sm font-medium mb-2 px-3">

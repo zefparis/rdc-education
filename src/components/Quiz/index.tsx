@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, ArrowRight, ArrowLeft, Award } from 'lucide-react';
+import { CheckCircle, XCircle, ArrowRight, ArrowLeft, Award, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { QuizProps } from './types';
+import { useStreak } from '@/hooks/useStreak';
+import { updateUserProgress } from '@/lib/gamification/userProgress';
+import { toast } from 'sonner';
 
 export { type QuizProps } from './types';
-
 export function Quiz({ quizData, onComplete, showResults = true }: QuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -16,6 +18,13 @@ export function Quiz({ quizData, onComplete, showResults = true }: QuizProps) {
   const [showExplanation, setShowExplanation] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
+  const { completeActivity } = useStreak();
+
+  useEffect(() => {
+    if (quizCompleted) {
+      completeActivity();
+    }
+  }, [quizCompleted, completeActivity]);
 
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === quizData.questions.length - 1;
@@ -40,6 +49,29 @@ export function Quiz({ quizData, onComplete, showResults = true }: QuizProps) {
   const handleNextQuestion = () => {
     if (isLastQuestion) {
       setQuizCompleted(true);
+      
+      // Enregistrer le résultat du quiz
+      const quizResult = {
+        id: `quiz-${Date.now()}`,
+        moduleId: quizData.moduleId || 'unknown',
+        score,
+        total: quizData.questions.length,
+      };
+      
+      const { newBadges } = updateUserProgress(quizResult);
+      
+      // Afficher une notification pour les nouveaux badges
+      newBadges.forEach(badge => {
+        toast.success(
+          <div className="flex items-center gap-2">
+            <Star className="h-5 w-5 text-yellow-500" />
+            <span>Nouveau badge débloqué: <strong>{badge.name}</strong></span>
+          </div>,
+          { duration: 5000 }
+        );
+      });
+      
+      // Appeler le callback de complétion
       if (onComplete) {
         onComplete(score, quizData.questions.length);
       }

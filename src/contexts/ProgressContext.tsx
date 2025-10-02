@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 
 interface CourseProgress {
   moduleSlug: string;
@@ -21,31 +21,57 @@ interface UserProgress {
   }[];
 }
 
+interface GameActivity {
+  gameId: string;
+  completed: boolean;
+  score: number;
+  completedAt?: string;
+  data?: Record<string, unknown>;
+}
+
 interface ProgressContextType {
   progress: UserProgress | null;
+  completedActivities: string[];
   markSectionComplete: (moduleSlug: string, sectionId: string) => void;
   markSectionIncomplete: (moduleSlug: string, sectionId: string) => void;
   getSectionProgress: (moduleSlug: string, sectionId: string) => CourseProgress | null;
   getModuleProgress: (moduleSlug: string) => CourseProgress[];
   getModuleCompletionPercentage: (moduleSlug: string) => number;
   startSection: (moduleSlug: string, sectionId: string) => void;
+  completeActivity: (activityId: string, data?: Record<string, unknown>) => void;
+  getCompletedActivities: () => string[];
+  isActivityCompleted: (activityId: string) => boolean;
   saveProgress: () => void;
 }
 
+
+// Create the context
 const ProgressContext = createContext<ProgressContextType | null>(null);
 
-// Clé pour le localStorage
+// Key for localStorage
 const PROGRESS_STORAGE_KEY = 'ia-solution-progress';
 
-export function ProgressProvider({ children }: { children: React.ReactNode }) {
-  const [progress, setProgress] = useState<UserProgress | null>(null);
+export interface ProgressProviderProps {
+  children: React.ReactNode;
+}
 
-  // Charger la progression depuis localStorage au démarrage
+export function ProgressProvider({ children }: ProgressProviderProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [progress, setProgress] = useState<UserProgress | null>(null);
+  const [activities, setActivities] = useState<Record<string, GameActivity>>({});
+
+  // Load progress from localStorage on mount
   useEffect(() => {
     const savedProgress = localStorage.getItem(PROGRESS_STORAGE_KEY);
     if (savedProgress) {
       try {
         const parsed = JSON.parse(savedProgress);
+        
+        // Charger les activités
+        if (parsed.activities) {
+          setActivities(parsed.activities);
+        }
+        
         // Convertir les dates depuis les chaînes
         if (parsed.modules) {
           parsed.modules = parsed.modules.map((moduleProgress: Omit<CourseProgress, 'completedAt' | 'startedAt'> & {
@@ -74,10 +100,43 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Sauvegarder la progression dans localStorage
+  // Mark an activity as completed
+  const completeActivity = useCallback((activityId: string, data: Record<string, unknown> = {}) => {
+    setActivities(prev => {
+      const score = typeof data.score === 'number' ? data.score : 0;
+      return {
+        ...prev,
+        [activityId]: {
+          gameId: activityId,
+          completed: true,
+          score,
+          completedAt: new Date().toISOString(),
+          data
+        }
+      };
+    });
+  }, []);
+
+  // Obtenir la liste des activités terminées
+  const getCompletedActivities = (): string[] => {
+    return Object.entries(activities)
+      .filter(([_, activity]) => activity.completed)
+      .map(([id]) => id);
+  };
+
+  // Vérifier si une activité est terminée
+  const isActivityCompleted = (activityId: string): boolean => {
+    return !!activities[activityId]?.completed;
+  };
+
+  // Save progress to localStorage
   const saveProgress = () => {
     if (progress) {
-      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progress));
+      const dataToSave = {
+        ...progress,
+        activities
+      };
+      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(dataToSave));
     }
   };
 
@@ -216,26 +275,30 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     return (completedCount / moduleProgress.length) * 100;
   };
 
-  const value: ProgressContextType = {
+  const contextValue: ProgressContextType = {
     progress,
+    completedActivities: getCompletedActivities(),
     markSectionComplete,
     markSectionIncomplete,
     getSectionProgress,
     getModuleProgress,
     getModuleCompletionPercentage,
     startSection,
+    completeActivity,
+    getCompletedActivities,
+    isActivityCompleted,
     saveProgress,
   };
 
   return (
-    <ProgressContext.Provider value={value}>
+    <ProgressContext.Provider value={contextValue}>
       {children}
     </ProgressContext.Provider>
   );
 }
 
 export function useProgress() {
-  const context = useContext(ProgressContext);
+  const context = React.useContext(ProgressContext);
   if (!context) {
     throw new Error('useProgress doit être utilisé dans un ProgressProvider');
   }

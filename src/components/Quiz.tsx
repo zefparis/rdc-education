@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, ArrowRight, ArrowLeft, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { useStreak } from '@/hooks/useStreak';
 
 export type Answer = {
   id: string;
@@ -41,6 +42,7 @@ export default function Quiz({ quizData, onComplete, showResults = true }: QuizP
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [score, setScore] = useState(0);
   const [timeSpent, setTimeSpent] = useState(0);
+  const { completeActivity } = useStreak();
   
   const currentQuestion = questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
@@ -74,12 +76,17 @@ export default function Quiz({ quizData, onComplete, showResults = true }: QuizP
     setShowExplanation(true);
   };
   
+  // Effet pour compléter l'activité quand le quiz est terminé
+  useEffect(() => {
+    if (quizCompleted) {
+      completeActivity();
+    }
+  }, [quizCompleted, completeActivity]);
+
   const handleNextQuestion = () => {
     if (isLastQuestion) {
       setQuizCompleted(true);
-      if (onComplete) {
-        onComplete(score, questions.length);
-      }
+      onComplete?.(score, questions.length);
     } else {
       setCurrentQuestionIndex(prev => prev + 1);
       setShowExplanation(false);
