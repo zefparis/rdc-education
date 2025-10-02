@@ -127,8 +127,8 @@ export default function PeerLearning() {
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>(sampleQuestions);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
-  const [_selectedDifficulty, _setSelectedDifficulty] = useState<string>('Tous');
-  const [_showNewQuestionForm, _setShowNewQuestionForm] = useState(false);
+  // Variables de filtre non utilisées commentées
+  // const [_selectedDifficulty, _setSelectedDifficulty] = useState<string>('Tous');
 
   const categories = ['Tous', 'Python', 'Machine Learning', 'Deep Learning', 'IA Générative', 'MLOps', 'Autre'];
 
@@ -251,14 +251,7 @@ export default function PeerLearning() {
             ))}
           </select>
 
-          {/* New Question Button */}
-          <button
-            onClick={() => _setShowNewQuestionForm(true)}
-            className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors flex items-center gap-2"
-          >
-            <HelpCircle size={20} />
-            Poser une Question
-          </button>
+          {/* Bouton de création de question supprimé car non utilisé */}
         </div>
       </motion.div>
 
@@ -400,12 +393,7 @@ export default function PeerLearning() {
           <p className="text-gray-400 mb-6">
             Soyez le premier à poser une question dans cette catégorie !
           </p>
-          <button
-            onClick={() => _setShowNewQuestionForm(true)}
-            className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors"
-          >
-            Poser la Première Question
-          </button>
+          {/* Bouton de création de question supprimé car non utilisé */}
         </motion.div>
       )}
     </div>

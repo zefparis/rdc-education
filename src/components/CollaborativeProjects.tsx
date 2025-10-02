@@ -105,7 +105,7 @@ const CollaborativeProjects = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('Tous');
-  const [_showCreateForm, _setShowCreateForm] = useState(false);
+  // Suppression de la variable non utilisée _showCreateForm
 
   useEffect(() => {
     let filtered = [...projects];
@@ -208,14 +208,7 @@ const CollaborativeProjects = () => {
             ))}
           </select>
 
-          {/* Create Project Button */}
-          <button
-            onClick={() => _setShowCreateForm(true)}
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors flex items-center gap-2"
-          >
-            <Plus size={20} />
-            Créer un Projet
-          </button>
+          {/* Bouton de création de projet supprimé car non utilisé */}
         </div>
       </motion.div>
 

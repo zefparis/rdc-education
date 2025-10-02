@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     serverActions: {},
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', 'geist']
   },
   // Ignorer les fichiers système Windows dans le suivi des fichiers
   webpack: (config) => {
@@ -24,9 +24,33 @@ const nextConfig = {
     return config;
   },
   // Configuration pour éviter les problèmes de chargement des modules
-  transpilePackages: ['lucide-react'],
-  // Désactiver le cache de build
-  cache: false,
+  transpilePackages: ['lucide-react', 'geist'],
+  // Configuration pour les images optimisées
+  images: {
+    domains: ['images.unsplash.com'],
+  },
+  // Configuration pour les en-têtes de sécurité
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

@@ -1,25 +1,28 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Geist, Geist_Mono } from 'next/font/google';
-import dynamic from 'next/dynamic';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
+
+// Configuration des polices
+const geistSans = {
+  style: {
+    fontFamily: 'var(--font-geist-sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif)'
+  }
+};
+
+const geistMono = {
+  style: {
+    fontFamily: 'var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace)'
+  }
+};
 
 // Chargement dynamique des composants côté client
-const Navbar = dynamic(() => import('@/components/Navbar'), { ssr: false });
-const Footer = dynamic(() => import('@/components/Footer'), { ssr: false });
-const FloatingParticles = dynamic(() => import('@/components/FloatingParticles'), { ssr: false });
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
+const FloatingParticles = dynamic(() => import("@/components/FloatingParticles"), { ssr: false });
 
 export default function ClientProviders({
   children,

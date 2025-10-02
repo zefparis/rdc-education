@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Brain, Sparkles, Users, BookOpen, Rocket } from 'lucide-react';
+import { Brain, Sparkles, Users, BookOpen, Rocket, ArrowRight } from 'lucide-react';
 import ImageCarousel from '@/components/ImageCarousel';
 import IntroAudioPlayer from '@/components/IntroAudioPlayer';
 

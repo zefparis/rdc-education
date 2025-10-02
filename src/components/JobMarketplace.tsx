@@ -176,8 +176,7 @@ export default function JobMarketplace() {
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(sampleJobs);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLocation, setSelectedLocation] = useState<string>('Toutes');
-  const [selectedJobType, setSelectedJobType] = useState<string>('Tous');
-  const [selectedExperience, setSelectedExperience] = useState<string>('Tous');
+  // Variables de filtre utilisées dans le composant
   const [selectedType, setSelectedType] = useState<string>('Tous');
   const [selectedLevel, setSelectedLevel] = useState<string>('Tous');
   const [activeTab, setActiveTab] = useState<'jobs' | 'companies'>('jobs');

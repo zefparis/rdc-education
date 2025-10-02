@@ -56,11 +56,7 @@ const interviewQuestions: InterviewQuestion[] = [
   }
 ];
 
-interface WindowWithSpeechRecognition extends Window {
-  SpeechRecognition: new () => SpeechRecognition;
-  webkitSpeechRecognition: new () => SpeechRecognition;
-}
-
+// Types pour la reconnaissance vocale
 interface SpeechRecognition extends EventTarget {
   continuous: boolean;
   interimResults: boolean;
@@ -96,6 +92,12 @@ export default function AIInterviewer() {
   const [isComplete, setIsComplete] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState<InterviewQuestion | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  
+  // Déclaration des types pour la reconnaissance vocale
+  interface WindowWithSpeechRecognition extends Window {
+    SpeechRecognition: new () => SpeechRecognition;
+    webkitSpeechRecognition: new () => SpeechRecognition;
+  }
 
   useEffect(() => {
     // Initialize speech recognition
