@@ -1,5 +1,16 @@
+  import type { CourseModule, Section, CodeExample, Exercise, FinalProject, Resource } from './types';
+
+  // Définition des types pour les paramètres de la fonction
+  interface GeneratePdfParams {
+    courseModule: CourseModule;
+    setIsGeneratingPdf: (isGenerating: boolean) => void;
+  }
+
   // Fonction pour générer le PDF complet du cours
-  const generatePdf = async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const generatePdf = async (params: GeneratePdfParams) => {
+    const { courseModule, setIsGeneratingPdf } = params;
+    
     if (!courseModule) return;
 
     setIsGeneratingPdf(true);
@@ -38,7 +49,7 @@
               📋 Prérequis
             </h2>
             <ul style="padding-left: 20px; color: #4a5568; font-size: 14px;">
-              ${courseModule.prerequisites.map(prereq => `<li style="margin-bottom: 8px;">${prereq}</li>`).join('')}
+              ${courseModule.prerequisites.map((prereq: string) => `<li style="margin-bottom: 8px;">${prereq}</li>`).join('')}
             </ul>
           </div>
         ` : ''}
@@ -49,12 +60,12 @@
             🎯 Objectifs d'apprentissage
           </h2>
           <ul style="padding-left: 20px; color: #4a5568; font-size: 14px; line-height: 1.8;">
-            ${courseModule.objectives.map(obj => `<li style="margin-bottom: 12px; padding-left: 15px; position: relative;">${obj}</li>`).join('')}
+            ${courseModule.objectives.map((obj: string) => `<li style="margin-bottom: 12px; padding-left: 15px; position: relative;">${obj}</li>`).join('')}
           </ul>
         </div>
 
         <!-- Sections du cours -->
-        ${courseModule.sections?.map((section, index) => `
+        ${courseModule.sections?.map((section: Section, index: number) => `
           <div style="margin-bottom: 50px; page-break-inside: avoid;">
             <!-- En-tête de section -->
             <div style="margin-bottom: 25px; padding: 15px; background-color: #edf2f7; border-radius: 8px; border-left: 4px solid #4a5568;">
@@ -70,7 +81,7 @@
             </div>
 
             <!-- Exemples de code -->
-            ${section.codeExamples?.map(example => `
+            ${section.codeExamples?.map((example: CodeExample) => `
               <div style="margin-bottom: 25px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
                 <div style="background-color: #2d3748; color: white; padding: 12px 15px; font-size: 13px; font-weight: bold;">
                   💻 ${example.title}
@@ -90,7 +101,7 @@ ${example.code}
             `).join('') || ''}
 
             <!-- Exercices -->
-            ${section.exercises?.map(exercise => `
+            ${section.exercises?.map((exercise: Exercise) => `
               <div style="margin-bottom: 25px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
                 <div style="background-color: #2d3748; color: white; padding: 12px 15px; font-size: 13px; font-weight: bold;">
                   🧠 Exercice ${exercise.id} - ${exercise.title}
@@ -130,13 +141,13 @@ ${exercise.solution}
               <div>
                 <h4 style="color: white; margin-bottom: 10px; font-size: 16px;">📋 Exigences</h4>
                 <ul style="opacity: 0.9; font-size: 14px;">
-                  ${courseModule.finalProject.requirements.map(req => `<li style="margin-bottom: 5px;">${req}</li>`).join('')}
+                  ${courseModule.finalProject.requirements.map((req: string) => `<li style="margin-bottom: 5px;">${req}</li>`).join('')}
                 </ul>
               </div>
               <div>
                 <h4 style="color: white; margin-bottom: 10px; font-size: 16px;">📦 Livrables</h4>
                 <ul style="opacity: 0.9; font-size: 14px;">
-                  ${courseModule.finalProject.deliverables.map(del => `<li style="margin-bottom: 5px;">${del}</li>`).join('')}
+                  ${courseModule.finalProject.deliverables.map((del: string) => `<li style="margin-bottom: 5px;">${del}</li>`).join('')}
                 </ul>
               </div>
             </div>
@@ -150,7 +161,7 @@ ${exercise.solution}
               🔗 Ressources supplémentaires
             </h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-              ${courseModule.resources.map(resource => `
+              ${courseModule.resources.map((resource: Resource) => `
                 <div style="padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f7fafc;">
                   <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                     <span style="font-size: 16px;">

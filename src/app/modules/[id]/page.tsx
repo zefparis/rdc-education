@@ -15,7 +15,6 @@ import {
   Code,
   ArrowLeft,
   BookOpen,
-  X,
   Copy,
   Check
 } from "lucide-react";

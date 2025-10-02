@@ -77,10 +77,10 @@ export default function QuizHome() {
           className="text-center mb-12 pt-8"
         >
           <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
-            Quiz d'Évaluation
+            Quiz d&apos;Évaluation
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Testez vos connaissances dans différents domaines de l'IA et de la Data Science
+            Testez vos connaissances dans différents domaines de l&apos;IA et de la Data Science
           </p>
         </motion.div>
 
@@ -151,15 +151,15 @@ export default function QuizHome() {
             </li>
             <li className="flex items-start gap-3">
               <span className="text-primary font-medium">•</span>
-              <span>Prenez le temps de comprendre les explications, même pour les bonnes réponses</span>
+              <span>Prenez le temps de comprendre les explications, m&ecirc;me pour les bonnes r&eacute;ponses</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-primary font-medium">•</span>
-              <span>N'hésitez pas à revenir en arrière pour revoir les concepts difficiles</span>
+              <span>N&apos;h&eacute;sitez pas &agrave; revenir en arri&egrave;re pour revoir les concepts difficiles</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-primary font-medium">•</span>
-              <span>Un score de 80% ou plus est considéré comme une bonne maîtrise</span>
+              <span>Un score de 80% ou plus est consid&eacute;r&eacute; comme une bonne ma&icirc;trise</span>
             </li>
           </ul>
         </motion.div>

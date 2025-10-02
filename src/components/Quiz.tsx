@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, ArrowRight, ArrowLeft, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 
 export type Answer = {
   id: string;

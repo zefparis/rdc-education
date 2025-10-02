@@ -48,14 +48,21 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         const parsed = JSON.parse(savedProgress);
         // Convertir les dates depuis les chaînes
         if (parsed.modules) {
-          parsed.modules = parsed.modules.map((moduleProgress: any) => ({
+          parsed.modules = parsed.modules.map((moduleProgress: Omit<CourseProgress, 'completedAt' | 'startedAt'> & {
+            completedAt?: string;
+            startedAt?: string;
+          }) => ({
             ...moduleProgress,
             completedAt: moduleProgress.completedAt ? new Date(moduleProgress.completedAt) : undefined,
             startedAt: moduleProgress.startedAt ? new Date(moduleProgress.startedAt) : undefined,
           }));
         }
         if (parsed.certificates) {
-          parsed.certificates = parsed.certificates.map((cert: any) => ({
+          parsed.certificates = parsed.certificates.map((cert: {
+            moduleSlug: string;
+            earnedAt: string;
+            score: number;
+          }) => ({
             ...cert,
             earnedAt: new Date(cert.earnedAt),
           }));

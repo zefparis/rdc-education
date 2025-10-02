@@ -1,9 +1,9 @@
 'use client';
 
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Head from 'next/head';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import dynamic from 'next/dynamic';
 
 // Configuration des polices
@@ -22,7 +22,8 @@ const geistMono = {
 // Chargement dynamique des composants côté client
 const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
 const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
-const FloatingParticles = dynamic(() => import("@/components/FloatingParticles"), { ssr: false });
+// Composant commenté car non utilisé pour le moment
+// const FloatingParticles = dynamic(() => import("@/components/FloatingParticles"), { ssr: false });
 
 export default function ClientProviders({
   children,

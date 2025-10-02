@@ -3,6 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Loader2 } from 'lucide-react';
+import { Question } from '@/components/Quiz';
 import { useEffect, useState } from 'react';
 
 // Dynamically import the Quiz component with no SSR
@@ -54,7 +55,12 @@ const quizModules = {
 export default function QuizPage() {
   const router = useRouter();
   const params = useParams();
-  const [quizData, setQuizData] = useState<any>(null);
+  const [quizData, setQuizData] = useState<{
+    questions: Question[];
+    title: string;
+    description: string;
+    icon: string;
+  } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   
   const moduleId = params?.moduleId as keyof typeof quizModules;
